@@ -1,0 +1,107 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block css %}
+<!-- Custom styles for this template -->
+<link href="{% static 'css/products.css'%}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">GeekShop</h1>
+            <div class="list-group">
+                {% for cat in category %}
+                <a href="#" class="list-group-item">{{cat}}</a>
+                {% endfor %}
+            </div>
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% for slide in sliderphotos %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter0}}"{% if forloop.counter0 == 0 %} class="active"{% endif %}></li>
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    {% for slide in sliderphotos %}
+                    <div class="carousel-item{% if forloop.counter0 == 0 %} active{% endif %}">
+                        <img class="d-block img-fluid" src="{% get_static_prefix %}{{slide.img}}" alt="{{slide.alt}} slide">
+                    </div>
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <div class="row">
+                {% for prod in products %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#">
+                            <img class="card-img-top"
+                                 src="{% get_static_prefix %}{{prod.img}}"
+                                 alt="">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">{{ prod.name }}</a>
+                            </h4>
+                            <h5>{{ prod.price }}</h5>
+                            <p class="card-text">{{ prod.descr }}</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- /.container -->
+{% endblock %}
+
+{% block footer %}
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; GeekShop 2020</p>
+    </div>
+    <!-- /.container -->
+</footer>
+{% endblock %}
