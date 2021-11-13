@@ -1,8 +1,9 @@
 {% extends 'mainapp/base.html' %}
+{% load static %}
 
 {% block css %}
 <!-- Custom styles for this template -->
-<link href="/static/css/products.css" rel="stylesheet">
+<link href="{% static 'css/products.css'%}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -35,13 +36,13 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
-                        <img class="d-block img-fluid" src="/static/vendor/img/slides/slide-1.jpg" alt="First slide">
+                        <img class="d-block img-fluid" src="{% static 'vendor/img/slides/slide-1.jpg'%}" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block img-fluid" src="/static/vendor/img/slides/slide-2.jpg" alt="Second slide">
+                        <img class="d-block img-fluid" src="{% static 'vendor/img/slides/slide-2.jpg'%}" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block img-fluid" src="/static/vendor/img/slides/slide-3.jpg" alt="Third slide">
+                        <img class="d-block img-fluid" src="{% static 'vendor/img/slides/slide-3.jpg'%}" alt="Third slide">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -60,7 +61,7 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Adidas-hoodie.png"
+                                 src="{% static 'vendor/img/products/Adidas-hoodie.png'%}"
                                  alt="">
                         </a>
                         <div class="card-body">
@@ -80,7 +81,7 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Blue-jacket-The-North-Face.png" alt="">
+                                 src="{% static 'vendor/img/products/Blue-jacket-The-North-Face.png'%}" alt="">
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">
@@ -101,7 +102,7 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Brown-sports-oversized-top-ASOS-DESIGN.png"
+                                 src="{% static 'vendor/img/products/Brown-sports-oversized-top-ASOS-DESIGN.png'%}"
                                  alt="">
                         </a>
                         <div class="card-body">
@@ -121,7 +122,7 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Black-Nike-Heritage-backpack.png"
+                                 src="{% static 'vendor/img/products/Black-Nike-Heritage-backpack.png'%}"
                                  alt="">
                         </a>
                         <div class="card-body">
@@ -141,7 +142,7 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Black-Dr-Martens-shoes.png"
+                                 src="{% static 'vendor/img/products/Black-Dr-Martens-shoes.png'%}"
                                  alt="">
                         </a>
                         <div class="card-body">
@@ -161,7 +162,7 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/Dark-blue-wide-leg-ASOs-DESIGN-trousers.png"
+                                 src="{% static 'vendor/img/products/Dark-blue-wide-leg-ASOs-DESIGN-trousers.png'%}"
                                  alt="">
                         </a>
                         <div class="card-body">
