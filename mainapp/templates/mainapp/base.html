@@ -25,8 +25,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">GeekShop</a>
-        <h5>Сейчас {% now "d.m.Y H:i" %}</h5>
+        <a class="navbar-brand" href="{% url 'index' %}">GeekShop {% now "d.m.Y H:i" %}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products' %}">Каталог <i class="fas fa-shopping-bag"></i> </a>
+                    <a class="nav-link" href="{% url 'mainapp:products' %}">Каталог <i class="fas fa-shopping-bag"></i> </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="auth/login.html">Войти <i class="fas fa-sign-in-alt"></i></a>
@@ -69,7 +68,7 @@
                     Бесплатная доставка по всему миру! Аутлет: до -70% Собственный бренд. -20% новым покупателям.
                 </p>
                 <button id="start-purchase-btn" type="button" class="btn btn-lg">
-                    <a id="start-purchase-link" href="{% url 'products' %}">
+                    <a id="start-purchase-link" href="{% url 'mainapp:products' %}">
                         Начать покупки
                     </a>
                 </button>
