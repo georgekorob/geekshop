@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -50,8 +49,3 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return render(request, 'mainapp/index.html')
-=======
-from django.shortcuts import render
-
-# Create your views here.
->>>>>>> 02ad150... create authapp, user model
