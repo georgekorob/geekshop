@@ -4,5 +4,6 @@ db.sqlite3
 key.txt
 /authapp/migrations/
 /mainapp/migrations/
-/media/product_image/
+/media/product_image/**
 /_README.md
+/media/users_image/**

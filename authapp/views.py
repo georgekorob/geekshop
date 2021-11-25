@@ -3,8 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authapp.forms import UserLoginForm, UserRegisterForm
-from authapp.models import User
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 # Create your views here.
@@ -29,9 +28,14 @@ def login(request):
     return render(request, 'authapp/login.html', context)
 
 
+def logout(request):
+    auth.logout(request)
+    return render(request, 'mainapp/index.html')
+
+
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(data=request.POST)
+        form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('authapp:login'))
@@ -46,6 +50,14 @@ def register(request):
     return render(request, 'authapp/register.html', context)
 
 
-def logout(request):
-    auth.logout(request)
-    return render(request, 'mainapp/index.html')
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {'title': 'реддактирование',
+               'form': form}
+    return render(request, 'authapp/profile.html', context)
