@@ -13,10 +13,10 @@
                     <div class="row text-center">
                         <div class="col-lg-4">
                             <input name="basketID" type="number" class="form-control"
-                                   value="0" min="0">
+                                   value="{{ basket.quantity }}" min="0">
                         </div>
                         <div class="col-lg-4">
-                            <a href="{% url 'baskets:basket_remove' basket.id %}">
+                            <a href="{% url 'basketapp:basket_remove' basket.id %}">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>

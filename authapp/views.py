@@ -7,6 +7,9 @@ from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 # Create your views here.
+from basketapp.models import Basket
+
+
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -56,5 +59,7 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
     context = {'title': 'реддактирование',
-               'form': form}
+               'form': form,
+               'baskets': Basket.objects.filter(user=request.user),
+               }
     return render(request, 'authapp/profile.html', context)
