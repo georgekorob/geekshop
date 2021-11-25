@@ -5,8 +5,6 @@ from mainapp.models import Product
 
 
 # Create your views here.
-
-
 def basket_add(request, id):
     user_select = request.user
     product = Product.objects.get(id=id)
