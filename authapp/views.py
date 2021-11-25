@@ -1,4 +1,4 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -17,8 +17,6 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
-        else:
-            print(form.errors)
     else:
         form = UserLoginForm()
     context = {
@@ -38,9 +36,8 @@ def register(request):
         form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистрировались!')
             return HttpResponseRedirect(reverse('authapp:login'))
-        else:
-            print(form.errors)
     else:
         form = UserRegisterForm()
     context = {

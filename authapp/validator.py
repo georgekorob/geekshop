@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 
-def validate_name(value: str):
+def validate_name(value):
     if value.isdigit():
         raise ValidationError(
             _(f'Имя не может быть цифровым!'), params={'value': value})
