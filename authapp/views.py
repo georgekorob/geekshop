@@ -29,6 +29,7 @@ def login(request):
     return render(request, 'authapp/login.html', context)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     return render(request, 'mainapp/index.html')
