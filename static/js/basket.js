@@ -11,4 +11,16 @@ window.onload = function (event) {
         );
         event.preventDefault()
     })
+    $('.card_add_basket').on('click', 'button[type="button"]', function (event) {
+        let value = event.target.value;
+        $.ajax(
+            {
+                url: `/baskets/add/${value}/`,
+                success: function (data) {
+                    $('.card_add_basket').html(data.result)
+                }
+            }
+        );
+        event.preventDefault()
+    })
 }
