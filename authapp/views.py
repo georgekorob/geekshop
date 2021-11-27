@@ -57,7 +57,10 @@ def profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            # return HttpResponseRedirect(reverse('index'))
+            messages.success(request, 'Вы успешно изменили профиль!')
+        else:
+            messages.warning(request, form.errors)
+
     else:
         form = UserProfileForm(instance=request.user)
 
