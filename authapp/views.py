@@ -29,6 +29,7 @@ def login(request):
     return render(request, 'authapp/login.html', context)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     return render(request, 'mainapp/index.html')
@@ -56,11 +57,20 @@ def profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('index'))
+            messages.success(request, 'Вы успешно изменили профиль!')
+        else:
+            messages.warning(request, form.errors)
+
     else:
         form = UserProfileForm(instance=request.user)
-    context = {'title': 'реддактирование',
+
+    baskets = Basket.objects.filter(user=request.user)
+    total_sum = sum(basket.sum for basket in baskets)
+    total_quantity = sum(basket.quantity for basket in baskets)
+    context = {'title': 'редактирование',
                'form': form,
-               'baskets': Basket.objects.filter(user=request.user),
+               'baskets': baskets,
+               'total_sum': total_sum,
+               'total_quantity': total_quantity,
                }
     return render(request, 'authapp/profile.html', context)
