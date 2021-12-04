@@ -1,0 +1,73 @@
+{% extends 'adminapp/base.html' %}
+{% block content %}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Пользователи</h1>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                        Пользователи
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Имя пользователя</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Адрес эл. почты</th>
+                                    <th>Персонал сайта</th>
+                                    <th>Активный</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Имя пользователя</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Адрес эл. почты</th>
+                                    <th>Персонал сайта</th>
+                                    <th>Активный</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr>
+                                    <td><a href="#" style="color: dodgerblue">test</a></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center"><i class="fas fa-check-circle"></i></td>
+                                    <td class="text-center"><i class="fas fa-check-circle"></i></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="admin-users-update-delete.html" style="color: dodgerblue">nikolay</a>
+                                    </td>
+                                    <td>Nikolay</td>
+                                    <td>Nagornyy</td>
+                                    <td>isp06.ru</td>
+                                    <td class="text-center"><i class="fas fa-times-circle"></i></td>
+                                    <td class="text-center"><i class="fas fa-times-circle"></i></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="admin-users-create.html">
+                            <button class="btn btn-success">Создать пользователя</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; GeekShop 2021</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+{% endblock %}
