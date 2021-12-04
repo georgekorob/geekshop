@@ -51,5 +51,9 @@ def update_user(request, pk):
     return render(request, 'adminapp/admin-users-update-delete.html', context)
 
 
-def delete_user(request):
-    return render(request, 'adminapp/admin-users-read.html')
+def delete_user(request, pk):
+    if request.method == 'POST':
+        user = User.objects.get(pk=pk)
+        user.is_active = not user.is_active
+        user.save()
+    return HttpResponseRedirect(reverse('adminapp:read_users'))
