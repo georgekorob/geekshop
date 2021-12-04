@@ -5,7 +5,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm
+from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryCreateForm
 from authapp.models import User
 from mainapp.models import ProductCategory
 
@@ -20,7 +20,7 @@ def create_user(request):
     if request.method == 'POST':
         form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()  # fdkebov427hflk
+            form.save()
             return HttpResponseRedirect(reverse('adminapp:read_users'))
     else:
         form = UserAdminRegisterForm()
@@ -68,19 +68,18 @@ def delete_user(request, pk):
 
 @user_passes_test(lambda u: u.is_superuser)
 def create_category(request):
-    pass
-    # if request.method == 'POST':
-    #     form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
-    #     if form.is_valid():
-    #         form.save()  # fdkebov427hflk
-    #         return HttpResponseRedirect(reverse('adminapp:read_users'))
-    # else:
-    #     form = UserAdminRegisterForm()
-    # context = {
-    #     'title': 'Админ | Регистрация',
-    #     'form': form,
-    # }
-    # return render(request, 'adminapp/admin-users-create.html', context)
+    if request.method == 'POST':
+        form = CategoryCreateForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:read_categories'))
+    else:
+        form = CategoryCreateForm()
+    context = {
+        'title': 'Админ | Категория',
+        'form': form,
+    }
+    return render(request, 'adminapp/admin-category-create.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
