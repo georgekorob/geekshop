@@ -3,8 +3,8 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">Создание категории</h1>
-                <form action="{% url 'adminapp:create_category' %}" method="post">
+                <h1 class="mt-4">Создание продукта</h1>
+                <form action="{% url 'adminapp:create_product' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="form-row">
