@@ -92,21 +92,20 @@ def read_categories(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def update_category(request, pk):
-    pass
-    # user_select = User.objects.get(pk=pk)
-    # if request.method == 'POST':
-    #     form = UserAdminProfileForm(data=request.POST, instance=user_select, files=request.FILES)
-    #     if form.is_valid():
-    #         form.save()
-    #         return HttpResponseRedirect(reverse('adminapp:read_users'))
-    # else:
-    #     form = UserAdminProfileForm(instance=user_select)
-    # context = {
-    #     'title': 'Админ | Редактирование пользователя',
-    #     'form': form,
-    #     'user_select': user_select
-    # }
-    # return render(request, 'adminapp/admin-users-update-delete.html', context)
+    category_select = ProductCategory.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = CategoryCreateForm(data=request.POST, instance=category_select, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminapp:read_categories'))
+    else:
+        form = CategoryCreateForm(instance=category_select)
+    context = {
+        'title': 'Админ | Редактирование категории',
+        'form': form,
+        'category_select': category_select
+    }
+    return render(request, 'adminapp/admin-category-update-delete.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
