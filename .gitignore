@@ -8,3 +8,4 @@ key.txt
 /basketapp/migrations/**
 /media/users_image/**
 /media/product_image/**
+/adminapp/migrations/
