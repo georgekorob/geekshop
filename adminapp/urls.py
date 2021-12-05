@@ -1,6 +1,6 @@
 from django.urls import path
-from adminapp.views import index, create_user, read_users, update_user, delete_user
-from adminapp.views import create_category, read_categories, update_category, delete_category
+from adminapp.views_users import index, create_user, read_users, update_user, delete_user
+from adminapp.views_categories import create_category, read_categories, update_category, delete_category
 
 app_name = 'adminapp'
 urlpatterns = [

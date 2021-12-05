@@ -3,7 +3,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">Редактирование категории | {{ category_select.username }}</h1>
+                <h1 class="mt-4">Редактирование категории | {{ category_select.name }}</h1>
                 <div class="card-body">
                     <form action="{% url 'adminapp:update_category' category_select.id %}" method="post"
                           enctype="multipart/form-data">
