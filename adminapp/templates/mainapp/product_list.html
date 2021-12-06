@@ -3,34 +3,46 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">Категории</h1>
+                <h1 class="mt-4">Продукты</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
-                        Категории
+                        Продукты
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Имя категории</th>
+                                    <th>Имя продукта</th>
+                                    <th>Изображение</th>
                                     <th>Описание</th>
+                                    <th>Цена</th>
+                                    <th>Количество</th>
+                                    <th>Категория</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Имя категории</th>
+                                    <th>Имя продукта</th>
+                                    <th>Изображение</th>
                                     <th>Описание</th>
+                                    <th>Цена</th>
+                                    <th>Количество</th>
+                                    <th>Категория</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                {% for category in categories %}
+                                {% for product in object_list %}
                                     <tr>
-                                        <td><a href="{% url 'adminapp:update_category' category.id %}"
-                                               style="color: dodgerblue">{{ category.name }}</a>
+                                        <td><a href="{% url 'adminapp:update_product' product.id %}"
+                                               style="color: dodgerblue">{{ product.name }}</a>
                                         </td>
-                                        <td>{{ category.description }}</td>
+                                        <td>{{ product.image }}</td>
+                                        <td>{{ product.description }}</td>
+                                        <td>{{ product.price }}</td>
+                                        <td>{{ product.quantity }}</td>
+                                        <td>{{ product.category }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -38,8 +50,8 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{% url 'adminapp:create_category' %}">
-                            <button class="btn btn-success">Создать категорию</button>
+                        <a href="{% url 'adminapp:create_product' %}">
+                            <button class="btn btn-success">Создать продукт</button>
                         </a>
                     </div>
                 </div>
