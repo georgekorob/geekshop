@@ -5,7 +5,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryCreateForm, ProductCreateForm
 from authapp.models import User
@@ -15,22 +15,6 @@ from mainapp.models import ProductCategory, Product
 @user_passes_test(lambda u: u.is_superuser)
 def index(request):
     return render(request, 'adminapp/admin.html')
-
-
-# @user_passes_test(lambda u: u.is_superuser)
-# def create_user(request):
-#     if request.method == 'POST':
-#         form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(reverse('adminapp:read_users'))
-#     else:
-#         form = UserAdminRegisterForm()
-#     context = {
-#         'title': 'Админ | Регистрация',
-#         'form': form,
-#     }
-#     return render(request, 'adminapp/users/user_form.html', context)
 
 
 class SuperUserOnlyMixin:
@@ -53,7 +37,7 @@ class UserCreateView(SuperUserOnlyMixin, PageTitleMixin, CreateView):
     model = User
     form_class = UserAdminRegisterForm
     page_title = 'админ: создание пользователя'
-    success_url = reverse_lazy('adminapp:admin_users')
+    success_url = reverse_lazy('adminapp:read_users')
 
 
 class UserListView(SuperUserOnlyMixin, PageTitleMixin, ListView):
@@ -61,31 +45,26 @@ class UserListView(SuperUserOnlyMixin, PageTitleMixin, ListView):
     page_title = 'админ: все пользователи'
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def update_user(request, pk):
-    user_select = User.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = UserAdminProfileForm(data=request.POST, instance=user_select, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:read_users'))
-    else:
-        form = UserAdminProfileForm(instance=user_select)
-    context = {
-        'title': 'Админ | Редактирование пользователя',
-        'form': form,
-        'user_select': user_select
-    }
-    return render(request, 'adminapp/admin-users-update-delete.html', context)
+class UserUpdateView(SuperUserOnlyMixin, PageTitleMixin, UpdateView):
+    model = User
+    form_class = UserAdminProfileForm
+    template_name = 'authapp/user_update_delete.html'
+    page_title = 'админ: редактирование пользователя'
+    success_url = reverse_lazy('adminapp:read_users')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def delete_user(request, pk):
-    if request.method == 'POST':
-        user = User.objects.get(pk=pk)
-        user.is_active = not user.is_active
-        user.save()
-    return HttpResponseRedirect(reverse('adminapp:read_users'))
+class UserDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
+    model = User
+    form_class = UserAdminProfileForm
+    template_name = 'authapp/user_update_delete.html'
+    page_title = 'админ: удалить пользователя'
+    success_url = reverse_lazy('adminapp:read_users')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_active = not self.object.is_active
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 @user_passes_test(lambda u: u.is_superuser)
