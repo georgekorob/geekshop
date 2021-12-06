@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.views.generic import DetailView
 
@@ -12,16 +13,27 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     context = {'title': 'каталог', 'sliderphotos': [
         {'alt': 'First', 'img': 'vendor/img/slides/slide-1.jpg'},
         {'alt': 'Second', 'img': 'vendor/img/slides/slide-2.jpg'},
         {'alt': 'Third', 'img': 'vendor/img/slides/slide-3.jpg'},
     ], 'categories': ProductCategory.objects.all()}
+
     if pk:
-        context['products'] = Product.objects.filter(category_id=pk)
+        prods = Product.objects.filter(category_id=pk)
     else:
-        context['products'] = Product.objects.all()
+        prods = Product.objects.all()
+
+    paginator = Paginator(prods, per_page=2)
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+    context['products'] = products_paginator
+
     return render(request, 'mainapp/products.html', context)
 
 
