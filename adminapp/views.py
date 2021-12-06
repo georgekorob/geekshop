@@ -3,8 +3,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse
-from django.views.generic import ListView
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, CreateView
 
 from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryCreateForm, ProductCreateForm
 from authapp.models import User
@@ -16,25 +17,48 @@ def index(request):
     return render(request, 'adminapp/admin.html')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def create_user(request):
-    if request.method == 'POST':
-        form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:read_users'))
-    else:
-        form = UserAdminRegisterForm()
-    context = {
-        'title': 'Админ | Регистрация',
-        'form': form,
-    }
-    return render(request, 'adminapp/users/admin-users-create.html', context)
+# @user_passes_test(lambda u: u.is_superuser)
+# def create_user(request):
+#     if request.method == 'POST':
+#         form = UserAdminRegisterForm(data=request.POST, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('adminapp:read_users'))
+#     else:
+#         form = UserAdminRegisterForm()
+#     context = {
+#         'title': 'Админ | Регистрация',
+#         'form': form,
+#     }
+#     return render(request, 'adminapp/users/user_form.html', context)
 
 
-class UserList(ListView):
+class SuperUserOnlyMixin:
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class PageTitleMixin:
+    page_key = 'page_title'
+    page_title = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context[self.page_key] = self.page_title
+        return context
+
+
+class UserCreateView(SuperUserOnlyMixin, PageTitleMixin, CreateView):
     model = User
-    template_name = 'adminapp/users/admin-users-read.html'
+    form_class = UserAdminRegisterForm
+    page_title = 'админ: создание пользователя'
+    success_url = reverse_lazy('adminapp:admin_users')
+
+
+class UserListView(SuperUserOnlyMixin, PageTitleMixin, ListView):
+    model = User
+    page_title = 'админ: все пользователи'
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -52,7 +76,7 @@ def update_user(request, pk):
         'form': form,
         'user_select': user_select
     }
-    return render(request, 'adminapp/users/admin-users-update-delete.html', context)
+    return render(request, 'adminapp/admin-users-update-delete.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -77,7 +101,7 @@ def create_category(request):
         'title': 'Админ | Категория',
         'form': form,
     }
-    return render(request, 'adminapp/categories/admin-category-create.html', context)
+    return render(request, 'adminapp/admin-category-create.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -85,7 +109,7 @@ def read_categories(request):
     context = {
         'categories': ProductCategory.objects.all()
     }
-    return render(request, 'adminapp/categories/admin-category-read.html', context)
+    return render(request, 'adminapp/admin-category-read.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -103,7 +127,7 @@ def update_category(request, pk):
         'form': form,
         'category_select': category_select
     }
-    return render(request, 'adminapp/categories/admin-category-update-delete.html', context)
+    return render(request, 'adminapp/admin-category-update-delete.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -127,7 +151,7 @@ def create_product(request):
         'title': 'Админ | Продукт',
         'form': form,
     }
-    return render(request, 'adminapp/products/admin-product-create.html', context)
+    return render(request, 'adminapp/admin-product-create.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -135,7 +159,7 @@ def read_products(request):
     context = {
         'products': Product.objects.all()
     }
-    return render(request, 'adminapp/products/admin-product-read.html', context)
+    return render(request, 'adminapp/admin-product-read.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -153,7 +177,7 @@ def update_product(request, pk):
         'form': form,
         'product_select': product_select
     }
-    return render(request, 'adminapp/products/admin-product-update-delete.html', context)
+    return render(request, 'adminapp/admin-product-update-delete.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
