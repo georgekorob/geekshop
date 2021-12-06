@@ -1,13 +1,12 @@
 from django.urls import path
-from adminapp.views_users import index, create_user, read_users, update_user, delete_user
-from adminapp.views_categories import create_category, read_categories, update_category, delete_category
-from adminapp.views_products import create_product, read_products, update_product, delete_product
+from adminapp.views import index, create_user, UserList, update_user, delete_user, create_category, read_categories, \
+    update_category, delete_category, create_product, read_products, update_product, delete_product
 
 app_name = 'adminapp'
 urlpatterns = [
     path('', index, name='index'),
     path('create_user', create_user, name='create_user'),
-    path('read_users', read_users, name='read_users'),
+    path('read_users', UserList.as_view(), name='read_users'),
     path('update_user/<int:pk>', update_user, name='update_user'),
     path('delete_user/<int:pk>', delete_user, name='delete_user'),
     path('create_category', create_category, name='create_category'),
