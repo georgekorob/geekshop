@@ -95,51 +95,29 @@ class CategoryDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
     success_url = reverse_lazy('adminapp:read_categories')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def create_product(request):
-    if request.method == 'POST':
-        form = ProductCreateForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:read_products'))
-    else:
-        form = ProductCreateForm()
-    context = {
-        'title': 'Админ | Продукт',
-        'form': form,
-    }
-    return render(request, 'adminapp/admin-product-create.html', context)
+class ProductCreateView(SuperUserOnlyMixin, PageTitleMixin, CreateView):
+    model = Product
+    form_class = ProductCreateForm
+    page_title = 'админ: создание продукта'
+    success_url = reverse_lazy('adminapp:read_products')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def read_products(request):
-    context = {
-        'products': Product.objects.all()
-    }
-    return render(request, 'adminapp/admin-product-read.html', context)
+class ProductListView(SuperUserOnlyMixin, PageTitleMixin, ListView):
+    model = Product
+    page_title = 'админ: все продукты'
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def update_product(request, pk):
-    product_select = Product.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = ProductCreateForm(data=request.POST, instance=product_select, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:read_products'))
-    else:
-        form = ProductCreateForm(instance=product_select)
-    context = {
-        'title': 'Админ | Редактирование продукта',
-        'form': form,
-        'product_select': product_select
-    }
-    return render(request, 'adminapp/admin-product-update-delete.html', context)
+class ProductUpdateView(SuperUserOnlyMixin, PageTitleMixin, UpdateView):
+    model = Product
+    form_class = ProductCreateForm
+    template_name = 'mainapp/product_update_delete.html'
+    page_title = 'админ: редактирование продукта'
+    success_url = reverse_lazy('adminapp:read_products')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def delete_product(request, pk):
-    if request.method == 'POST':
-        product = Product.objects.get(pk=pk)
-        product.delete()
-    return HttpResponseRedirect(reverse('adminapp:read_products'))
+class ProductDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
+    model = Product
+    form_class = ProductCreateForm
+    template_name = 'mainapp/product_update_delete.html'
+    page_title = 'админ: удалить продукт'
+    success_url = reverse_lazy('adminapp:read_products')
