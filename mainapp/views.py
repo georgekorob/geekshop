@@ -12,12 +12,16 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request):
+def products(request, pk=None):
     context = {'title': 'каталог', 'sliderphotos': [
         {'alt': 'First', 'img': 'vendor/img/slides/slide-1.jpg'},
         {'alt': 'Second', 'img': 'vendor/img/slides/slide-2.jpg'},
         {'alt': 'Third', 'img': 'vendor/img/slides/slide-3.jpg'},
-    ], 'categories': ProductCategory.objects.all(), 'products': Product.objects.all()}
+    ], 'categories': ProductCategory.objects.all()}
+    if pk:
+        context['products'] = Product.objects.filter(category_id=pk)
+    else:
+        context['products'] = Product.objects.all()
     return render(request, 'mainapp/products.html', context)
 
 

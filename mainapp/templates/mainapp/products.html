@@ -16,8 +16,9 @@
 
             <h1 class="my-4">GeekShop</h1>
             <div class="list-group">
+                <a href="{% url 'mainapp:products' %}" class="list-group-item">Все</a>
                 {% for cat in categories %}
-                <a href="#" class="list-group-item">{{cat.name}}</a>
+                <a href="{% url 'mainapp:category' cat.id %}" class="list-group-item">{{cat.name}}</a>
                 {% endfor %}
             </div>
 
