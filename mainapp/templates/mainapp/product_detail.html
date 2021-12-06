@@ -5,28 +5,28 @@
 
 {% block content %}
     <div class="container justify-content-center m-md-10" style="margin-top: 100px">
-        <div class="product_detail" style="font-weight: bolder">
-            <img style="height: 700px; margin-bottom: 50px" src="{{ product.image.url }}" alt="photo">
+        <div class="object_detail" style="font-weight: bolder">
+            <img style="height: 700px; margin-bottom: 50px" src="{{ object.image.url }}" alt="photo">
             <table>
                 <tr>
                     <td width="150">Категория</td>
-                    <td>{{ product.category.name }}</td>
+                    <td>{{ object.category.name }}</td>
                 </tr>
                 <tr>
                     <td>Название</td>
-                    <td>{{ product.name }}</td>
+                    <td>{{ object.name }}</td>
                 </tr>
                 <tr>
                     <td>Описание</td>
-                    <td>{{ product.description }}</td>
+                    <td>{{ object.description }}</td>
                 </tr>
                 <tr>
                     <td>Цена</td>
-                    <td>{{ product.price }}&nbspруб</td>
+                    <td>{{ object.price }}&nbspруб</td>
                 </tr>
                 <tr>
                     <td>Количество</td>
-                    <td>{{ product.quantity }} шт.</td>
+                    <td>{{ object.quantity }} шт.</td>
                 </tr>
             </table>
         </div>

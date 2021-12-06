@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from mainapp.models import ProductCategory, Product
 
@@ -8,48 +8,34 @@ from mainapp.models import ProductCategory, Product
 # Create your views here.
 def index(request):
     context = {
-        'title': 'магазин',
+        'page_title': 'магазин',
     }
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request, pk=None, page=1):
-    context = {'title': 'каталог', 'sliderphotos': [
-        {'alt': 'First', 'img': 'vendor/img/slides/slide-1.jpg'},
-        {'alt': 'Second', 'img': 'vendor/img/slides/slide-2.jpg'},
-        {'alt': 'Third', 'img': 'vendor/img/slides/slide-3.jpg'},
-    ], 'categories': ProductCategory.objects.all()}
+class ProductList(ListView):
+    model = Product
+    paginate_by = 3
+    template_name = 'mainapp/products.html'
 
-    if pk:
-        prods = Product.objects.filter(category_id=pk)
-    else:
-        prods = Product.objects.all()
+    def get_queryset(self):
+        cat_id = self.kwargs.get('cat_id')
+        prods = super().get_queryset()
+        if cat_id:
+            prods = prods.filter(category_id=cat_id)
+        self.cat_id = cat_id if cat_id else 0
+        return prods
 
-    paginator = Paginator(prods, per_page=2)
-    try:
-        products_paginator = paginator.page(page)
-    except PageNotAnInteger:
-        products_paginator = paginator.page(1)
-    except EmptyPage:
-        products_paginator = paginator.page(paginator.num_pages)
-    context['products'] = products_paginator
-
-    return render(request, 'mainapp/products.html', context)
-
-
-def detail(request, id):
-    context = {
-        'product': Product.objects.get(id=id),
-    }
-    return render(request, 'mainapp/detail.html', context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['sliderphotos'] = [{'alt': 'First', 'img': 'vendor/img/slides/slide-1.jpg'},
+                                   {'alt': 'Second', 'img': 'vendor/img/slides/slide-2.jpg'},
+                                   {'alt': 'Third', 'img': 'vendor/img/slides/slide-3.jpg'}, ]
+        context['categories'] = ProductCategory.objects.all()
+        context['cat_id'] = self.cat_id
+        context['page_title'] = 'каталог'
+        return context
 
 
 class ProductDetail(DetailView):
     model = Product
-    template_name = 'mainapp/detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProductDetail, self).get_context_data(**kwargs)
-        product = self.get_object()
-        context['product'] = product
-        return context

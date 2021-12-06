@@ -3,11 +3,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryCreateForm, ProductCreateForm
+from adminapp.mixins import SuperUserOnlyMixin, PageTitleMixin
 from authapp.models import User
 from mainapp.models import ProductCategory, Product
 
@@ -15,22 +15,6 @@ from mainapp.models import ProductCategory, Product
 @user_passes_test(lambda u: u.is_superuser)
 def index(request):
     return render(request, 'adminapp/admin.html')
-
-
-class SuperUserOnlyMixin:
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-
-class PageTitleMixin:
-    page_key = 'page_title'
-    page_title = None
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context[self.page_key] = self.page_title
-        return context
 
 
 class UserCreateView(SuperUserOnlyMixin, PageTitleMixin, CreateView):
