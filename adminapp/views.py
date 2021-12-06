@@ -67,54 +67,32 @@ class UserDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def create_category(request):
-    if request.method == 'POST':
-        form = CategoryCreateForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:read_categories'))
-    else:
-        form = CategoryCreateForm()
-    context = {
-        'title': 'Админ | Категория',
-        'form': form,
-    }
-    return render(request, 'adminapp/admin-category-create.html', context)
+class CategoryCreateView(SuperUserOnlyMixin, PageTitleMixin, CreateView):
+    model = ProductCategory
+    form_class = CategoryCreateForm
+    page_title = 'админ: создание категории'
+    success_url = reverse_lazy('adminapp:read_categories')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def read_categories(request):
-    context = {
-        'categories': ProductCategory.objects.all()
-    }
-    return render(request, 'adminapp/admin-category-read.html', context)
+class CategoryListView(SuperUserOnlyMixin, PageTitleMixin, ListView):
+    model = ProductCategory
+    page_title = 'админ: все категории'
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def update_category(request, pk):
-    category_select = ProductCategory.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = CategoryCreateForm(data=request.POST, instance=category_select, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('adminapp:read_categories'))
-    else:
-        form = CategoryCreateForm(instance=category_select)
-    context = {
-        'title': 'Админ | Редактирование категории',
-        'form': form,
-        'category_select': category_select
-    }
-    return render(request, 'adminapp/admin-category-update-delete.html', context)
+class CategoryUpdateView(SuperUserOnlyMixin, PageTitleMixin, UpdateView):
+    model = ProductCategory
+    form_class = CategoryCreateForm
+    template_name = 'mainapp/productcategory_update_delete.html'
+    page_title = 'админ: редактирование категории'
+    success_url = reverse_lazy('adminapp:read_categories')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def delete_category(request, pk):
-    if request.method == 'POST':
-        category = ProductCategory.objects.get(pk=pk)
-        category.delete()
-    return HttpResponseRedirect(reverse('adminapp:read_categories'))
+class CategoryDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
+    model = ProductCategory
+    form_class = CategoryCreateForm
+    template_name = 'mainapp/productcategory_update_delete.html'
+    page_title = 'админ: удалить категорию'
+    success_url = reverse_lazy('adminapp:read_categories')
 
 
 @user_passes_test(lambda u: u.is_superuser)
