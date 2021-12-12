@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from basketapp.models import Basket
 from mainapp.models import Product
 

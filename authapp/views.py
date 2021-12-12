@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 
-from adminapp.mixins import PageTitleMixin, LoginRequiredMixin
+from adminapp.mixins import PageTitleMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 # Create your views here.

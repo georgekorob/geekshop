@@ -9,10 +9,10 @@ class SuperUserOnlyMixin(View):
         return super().dispatch(request, *args, **kwargs)
 
 
-class LoginRequiredMixin(View):
-    @method_decorator(user_passes_test(lambda u: u.is_authenticated))
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+# class LoginRequiredMixin(View):
+#     @method_decorator(user_passes_test(lambda u: u.is_authenticated))
+#     def dispatch(self, request, *args, **kwargs):
+#         return super().dispatch(request, *args, **kwargs)
 
 
 class PageTitleMixin(ContextMixin):
