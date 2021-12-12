@@ -8,7 +8,7 @@ from mainapp.models import ProductCategory, Product
 # Create your views here.
 def index(request):
     context = {
-        'page_title': 'магазин',
+        'title': 'магазин',
     }
     return render(request, 'mainapp/index.html', context)
 
@@ -33,7 +33,7 @@ class ProductList(ListView):
                                    {'alt': 'Third', 'img': 'vendor/img/slides/slide-3.jpg'}, ]
         context['categories'] = ProductCategory.objects.all()
         context['cat_id'] = self.cat_id
-        context['page_title'] = 'каталог'
+        context['title'] = 'каталог'
         return context
 
 

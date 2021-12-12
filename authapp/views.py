@@ -1,76 +1,58 @@
-from django.contrib import auth, messages
-from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView, FormView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView
 
+from adminapp.mixins import PageTitleMixin, LoginRequiredMixin
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 # Create your views here.
+from authapp.models import User
 from basketapp.models import Basket
 
 
-def login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = auth.authenticate(username=username, password=password)
-            if user.is_active:
-                auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
-    else:
-        form = UserLoginForm()
-    context = {
-        'title': 'Авторизация',
-        'form': form,
-    }
-    return render(request, 'authapp/login.html', context)
+class UserLoginView(PageTitleMixin, LoginView):
+    form_class = UserLoginForm
+    title = 'авторизация'
 
 
-@login_required
-def logout(request):
-    auth.logout(request)
-    return render(request, 'mainapp/index.html')
+class UserLogoutView(LoginRequiredMixin, LogoutView):
+    pass
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно зарегистрировались!')
-            return HttpResponseRedirect(reverse('authapp:login'))
-    else:
-        form = UserRegisterForm()
-    context = {
-        'title': 'Регистрация',
-        'form': form,
-    }
-    return render(request, 'authapp/register.html', context)
+class UserRegisterView(PageTitleMixin, FormView):
+    model = User
+    form_class = UserRegisterForm
+    template_name = 'authapp/register.html'
+    title = 'регистрация'
+    success_url = reverse_lazy('authapp:login')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Вы успешно зарегистрировались!')
+        super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
 
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Вы успешно изменили профиль!')
-        else:
-            messages.warning(request, form.errors)
+class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
+    form_class = UserProfileForm
+    success_url = reverse_lazy('authapp:profile')
+    template_name = 'authapp/profile.html'
+    title = 'редактирование'
 
-    else:
-        form = UserProfileForm(instance=request.user)
+    def form_valid(self, form):
+        messages.success(self.request, "Вы успешно отредактированы!")
+        super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
-    baskets = Basket.objects.filter(user=request.user)
-    total_sum = sum(basket.sum for basket in baskets)
-    total_quantity = sum(basket.quantity for basket in baskets)
-    context = {'title': 'редактирование',
-               'form': form,
-               'baskets': baskets,
-               'total_sum': total_sum,
-               'total_quantity': total_quantity,
-               }
-    return render(request, 'authapp/profile.html', context)
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(User, pk=self.request.user.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        baskets = Basket.objects.filter(user=self.request.user)
+        context['baskets'] = baskets
+        context['total_sum'] = sum(basket.sum for basket in baskets)
+        context['total_quantity'] = sum(basket.quantity for basket in baskets)
+        return context
