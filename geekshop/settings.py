@@ -154,3 +154,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/emails/'
 
 # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+# python -m smtpd -n -c DebuggingServer localhost:25

@@ -35,7 +35,7 @@ class UserRegisterView(PageTitleMixin, FormView):
     def form_valid(self, form):
         user = form.save()
         if self.send_verify_link(user):
-            messages.success(self.request, 'Вы успешно зарегистрировались!')
+            messages.success(self.request, 'Ссылка для активации учетной записи отправлена Вам на почту!')
             super().form_valid(form)
             return HttpResponseRedirect(self.get_success_url())
         messages.error(self.request, form.errors)
