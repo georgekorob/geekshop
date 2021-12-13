@@ -1,3 +1,11 @@
 body {
     padding-top: 56px;
 }
+
+#current_page {
+    display: none !important;
+}
+
+#current_cat {
+    display: none !important;
+}
