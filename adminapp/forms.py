@@ -49,12 +49,8 @@ class CategoryCreateForm(forms.ModelForm):
 
 
 class ProductCreateForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput())
-    image = forms.ImageField()
-    description = forms.CharField(widget=forms.TextInput())
-    price = forms.DecimalField(max_digits=8, decimal_places=2)
-    quantity = forms.IntegerField()
     category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
+    image = forms.ImageField(widget=forms.FileInput)
 
     class Meta:
         model = Product
@@ -63,4 +59,14 @@ class ProductCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductCreateForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            if field_name == 'category':
+                field.widget.attrs['class'] = 'form-control'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'
+        self.fields['image'].widget.attrs['class'] = 'custom-file-input'
+
+
+class ProductUpdateForm(ProductCreateForm):
+    category = forms.ModelChoiceField(queryset=ProductCategory.objects.all().select_related(),
+                                      empty_label=None)
+    image = forms.ImageField(widget=forms.FileInput, required=False)

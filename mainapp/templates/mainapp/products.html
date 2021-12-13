@@ -68,6 +68,8 @@
                         <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
                             <a class="page-link" href="{% if page_obj.has_next %}{% url 'mainapp:category' cat_id page_obj.next_page_number %}{% endif %}">Next</a>
                         </li>
+                        <li id="current_page">{{ page_obj.number }}</li>
+                        <li id="current_cat">{{ cat_id }}</li>
                     </ul>
                 </nav>
 

@@ -1,16 +1,16 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 
+from adminapp.mixins import PageTitleMixin
 from mainapp.models import ProductCategory, Product
 
 
 # Create your views here.
-def index(request):
-    context = {
-        'page_title': 'магазин',
-    }
-    return render(request, 'mainapp/index.html', context)
+class IndexTemplateView(PageTitleMixin, TemplateView):
+    template_name = 'mainapp/index.html'
+    title = 'магазин'
 
 
 class ProductList(ListView):
@@ -33,7 +33,7 @@ class ProductList(ListView):
                                    {'alt': 'Third', 'img': 'vendor/img/slides/slide-3.jpg'}, ]
         context['categories'] = ProductCategory.objects.all()
         context['cat_id'] = self.cat_id
-        context['page_title'] = 'каталог'
+        context['title'] = 'каталог'
         return context
 
 

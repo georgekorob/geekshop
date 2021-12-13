@@ -1,7 +1,6 @@
 .idea
 pycache/
 db.sqlite3
-key.txt
 /_README.md
 /mainapp/migrations/**
 /authapp/migrations/**
@@ -9,3 +8,4 @@ key.txt
 /media/users_image/**
 /media/product_image/**
 /adminapp/migrations/
+/.env
