@@ -78,7 +78,7 @@ class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         baskets = Basket.objects.filter(user=self.request.user)
-        context['baskets'] = baskets
+        # context['baskets'] = baskets
         context['total_sum'] = sum(basket.sum for basket in baskets)
         context['total_quantity'] = sum(basket.quantity for basket in baskets)
         return context

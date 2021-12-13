@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -23,7 +24,8 @@ def basket_add(request, id):
             Basket.objects.create(user=user_select, product=product, quantity=1)
 
         products = Product.objects.all()
-        context = {'products': products, }
+        page = Paginator(products, 3)
+        context = {'page_obj': page, }
         result = render_to_string('mainapp/includes/card.html', context)
         return JsonResponse({'result': result})
 
