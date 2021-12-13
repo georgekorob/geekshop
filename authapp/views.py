@@ -1,8 +1,10 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView, FormView
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView
 
 from adminapp.mixins import PageTitleMixin
@@ -31,9 +33,22 @@ class UserRegisterView(PageTitleMixin, FormView):
     success_url = reverse_lazy('authapp:login')
 
     def form_valid(self, form):
-        messages.success(self.request, 'Вы успешно зарегистрировались!')
-        super().form_valid(form)
-        return HttpResponseRedirect(self.get_success_url())
+        user = form.save()
+        if self.send_verify_link(user):
+            messages.success(self.request, 'Вы успешно зарегистрировались!')
+            super().form_valid(form)
+            return HttpResponseRedirect(self.get_success_url())
+        messages.error(self.request, form.errors)
+        return render(self.request, self.template_name, {'form', form})
+
+    def send_verify_link(self, user):
+        verify_link = reverse('authapp:verify', args=[user.email, user.activation_key])
+        subject = f'Для активации учетной записи {user.username} пройдите по ссылке'
+        message = f'Для подтверждения учетной записи {user.username} на портале \n {settings.DOMAIN_NAME}{verify_link}'
+        return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+    def verify(self, email, activate_key):
+        pass
 
 
 class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
