@@ -116,9 +116,7 @@ LANGUAGE_CODE = 'ru'
 
 ugettext = lambda s: s
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale/'),
-)
+LOCALE_PATHS = (BASE_DIR / 'locale',)
 LANGUAGES = (
     ('en', ugettext('English')),
     ('ru', ugettext('Russia')),
