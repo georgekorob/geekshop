@@ -9,3 +9,4 @@ key.txt
 /media/users_image/**
 /media/product_image/**
 /adminapp/migrations/
+/.env
