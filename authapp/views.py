@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.auth.views import LoginView, LogoutView, FormView
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -48,7 +48,17 @@ class UserRegisterView(PageTitleMixin, FormView):
         return send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
     def verify(self, email, activate_key):
-        pass
+        try:
+            user = User.objects.get(email=email)
+            if user and user.activation_key == activate_key and not user.is_activation_key_expires():
+                user.activation_key = ''
+                user.activation_key_expires = None
+                user.is_active = True
+                user.save()
+                auth.login(self, user)
+            return render(self, 'authapp/verification.html')
+        except Exception as e:
+            return HttpResponseRedirect(reverse('index'))
 
 
 class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
