@@ -4,6 +4,8 @@ import random
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.core.exceptions import ValidationError
+
+from authapp.models import UserProfile
 from authapp.validator import validate_name
 from django import forms
 
@@ -72,3 +74,17 @@ class UserProfileForm(UserChangeForm):
         if data < 18:
             raise ValidationError('Вы слишком молоды!')
         return data
+
+
+class UserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ('user',)
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field_name != 'gender':
+                field.widget.attrs['class'] = 'form-control py-4'
+            else:
+                field.widget.attrs['class'] = 'form-control'
