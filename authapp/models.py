@@ -40,3 +40,10 @@ class UserProfile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.userprofile.save()
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name} {self.user.username}'
+
+    class Meta:
+        verbose_name = 'пользователь vk'
+        verbose_name_plural = 'пользователи vk'
