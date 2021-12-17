@@ -13,6 +13,7 @@
 * 0:20 template login
 * 0:30 models
 * 0:50 forms
+* 0:55 view
 * 
 
 ##Задания 2
