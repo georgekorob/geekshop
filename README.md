@@ -4,21 +4,35 @@
 
 Коробанов Георгий.
 
-##Урок 1
-* 0:17 models user activation_key
-* 0:23 forms register save
-* 0:26 views register post
-* 0:31 urls verify
-* 0:39 dotenv
-* 0:44 .env requirements
-* 0:49 template verification
-* 1:00 test
-* 1:17 request self
-* 1:20 DebuggingServer
-* 1:27 mainapp.context_processors
-* 1:34 mail
+##Урок 2
+* 0:08 приложение vk
+* 0:11 pip install social_auth_app_django
+* 0:12 settings
+* 0:16 backend hw
+* 
 
-##Задания 1
+##Задания 2
+1. Реализовать в проекте простой вариант аутентификации пользователя через социальную сеть VK+.
+2. Поработать со связью моделей «один-к-одному»: создать профиль пользователя и обеспечить возможность его редактирования.
+3. Реализовать автоматическое заполнение профиля пользователя при аутентификации через социальную сеть.
+4. Проверить работу исключения «AuthForbidden», например, задав при проверке минимальный возраст 100 лет.
+5. *Получить и сохранить язык из сети VK+.
+6. *Получить и сохранить foto из сети VK+.
+
+[comment]: <> (##Урок 1)
+[comment]: <> (* 0:17 models user activation_key)
+[comment]: <> (* 0:23 forms register save)
+[comment]: <> (* 0:26 views register post)
+[comment]: <> (* 0:31 urls verify)
+[comment]: <> (* 0:39 dotenv)
+[comment]: <> (* 0:44 .env requirements)
+[comment]: <> (* 0:49 template verification)
+[comment]: <> (* 1:00 test)
+[comment]: <> (* 1:17 request self)
+[comment]: <> (* 1:20 DebuggingServer)
+[comment]: <> (* 1:27 mainapp.context_processors)
+[comment]: <> (* 1:34 mail)
+[comment]: <> (##Задания 1)
 [comment]: <> (1. Организовать выдачу сообщения об успешной отправке письма с кодом подтверждения в окне регистрации пользователя.)
 [comment]: <> (2. Реализовать активацию пользователя при переходе по ссылке из письма.)
 [comment]: <> (3. Создать контекстный процессор для корзины и скорректировать код контроллеров основного приложения.)
