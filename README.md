@@ -14,6 +14,7 @@
 * 0:30 models
 * 0:50 forms
 * 0:55 view
+* 1:01 template profile
 * 
 
 ##Задания 2

@@ -85,8 +85,8 @@ class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = UserProfileForm(data=request.POST,files=request.FILES,instance=request.user)
-        profile_form = UserProfileEditForm(request.POST,instance=request.user.userprofile)
+        form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
+        profile_form = UserProfileEditForm(request.POST, instance=request.user.userprofile)
         if form.is_valid() and profile_form.is_valid():
             form.save()
         return redirect(self.success_url)
