@@ -9,7 +9,9 @@
 * 0:11 pip install social_auth_app_django
 * 0:12 settings
 * 0:16 backend hw
-* 
+* 0:18 urls
+* 0:20 template login
+* 0:30 models
 
 ##Задания 2
 1. Реализовать в проекте простой вариант аутентификации пользователя через социальную сеть VK+.
