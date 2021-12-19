@@ -1,34 +1,27 @@
-import hashlib
-import random
-
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
-from django.core.exceptions import ValidationError
-
-from authapp.models import UserProfile
-from authapp.validator import validate_name
 from django import forms
 
+from ordersapp.models import Order, OrderItem
 
-class UserProfileForm(UserChangeForm):
-    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_name])
-    image = forms.ImageField(widget=forms.FileInput(), required=False)
-    age = forms.IntegerField(widget=forms.NumberInput(), required=False)
 
+class OrderForm(forms.ModelForm):
     class Meta:
-        model = get_user_model()
-        fields = ('username', 'email', 'first_name', 'last_name', 'image', 'age')
+        model = Order
+        exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        super(UserProfileForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['readonly'] = True
-        self.fields['email'].widget.attrs['readonly'] = True
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
-        self.fields['image'].widget.attrs['class'] = 'custom-file-input'
+            field.widget.attrs['class'] = 'form-control'
 
-    def clean_age(self):
-        data = self.cleaned_data['age']
-        if data < 18:
-            raise ValidationError('Вы слишком молоды!')
-        return data
+
+class OrderItemsForm(forms.ModelForm):
+    price = forms.CharField(label='цена', required=False)
+
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
