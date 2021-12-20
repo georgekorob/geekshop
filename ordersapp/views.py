@@ -1,7 +1,7 @@
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
@@ -13,7 +13,7 @@ from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
 
 
-class OrderList(ListView, PageTitleMixin):
+class OrderList(PageTitleMixin, ListView):
     model = Order
     title = 'список заказов'
 
@@ -21,7 +21,7 @@ class OrderList(ListView, PageTitleMixin):
         return Order.objects.filter(user=self.request.user, is_active=True)
 
 
-class OrderCreate(CreateView, PageTitleMixin):
+class OrderCreate(PageTitleMixin, CreateView):
     model = Order
     fields = []
     success_url = reverse_lazy('orders:list')
@@ -64,14 +64,14 @@ class OrderCreate(CreateView, PageTitleMixin):
         return super().form_valid(form)
 
 
-class OrderUpdate(UpdateView):
+class OrderUpdate(PageTitleMixin, UpdateView):
     model = Order
     fields = []
     success_url = reverse_lazy('orders:list')
     title = 'обновление заказа'
 
     def get_context_data(self, **kwargs):
-        context = super(OrderUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
         if self.request.POST:
@@ -96,16 +96,16 @@ class OrderUpdate(UpdateView):
 
             if self.object.get_total_cost() == 0:
                 self.object.delete()
-        return super(OrderUpdate, self).form_valid(form)
+        return super().form_valid(form)
 
 
-class OrderDelete(DeleteView, PageTitleMixin):
+class OrderDelete(PageTitleMixin, DeleteView):
     model = Order
     success_url = reverse_lazy('orders:list')
     title = 'удаление заказа'
 
 
-class OrderDetail(DetailView, PageTitleMixin):
+class OrderDetail(PageTitleMixin, DetailView):
     model = Order
     title = 'просмотр заказа'
 
