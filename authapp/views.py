@@ -14,6 +14,7 @@ from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, User
 # Create your views here.
 from authapp.models import User
 from basketapp.models import Basket
+from authapp.signals import create_user_profile
 
 
 class UserLoginView(PageTitleMixin, LoginView):

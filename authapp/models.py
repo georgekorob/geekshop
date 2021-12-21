@@ -1,10 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils.timezone import now
 from datetime import timedelta
-
 
 # Create your models here.
 
@@ -32,15 +29,6 @@ class UserProfile(models.Model):
     about = models.TextField(verbose_name='о себе', blank=True, null=True)
     gender = models.CharField(verbose_name='пол', choices=GENDER_CHOICES, blank=True, max_length=2)
     langs = models.CharField(verbose_name='язык', blank=True, max_length=10, default='RU')
-
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserProfile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.userprofile.save()
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name} {self.user.username}'

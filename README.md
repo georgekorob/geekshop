@@ -4,26 +4,27 @@
 
 Коробанов Георгий.
 
-##Урок 3
-* 0:15 photo and lang
-* 0:28 basket
-* 0:35 models
-* 0:53 views
-* 1:00 forms
-* 1:05 template user dropdown
-* 1:19 order templates
-* 1:23 views
-* 1:32 templates
+[comment]: <> (##Урок 4)
 
-##Задания 3
+[comment]: <> (##Задания 4)
+
+[comment]: <> (##Урок 3)
+[comment]: <> (* 0:15 photo and lang)
+[comment]: <> (* 0:28 basket)
+[comment]: <> (* 0:35 models)
+[comment]: <> (* 0:53 views)
+[comment]: <> (* 1:00 forms)
+[comment]: <> (* 1:05 template user dropdown)
+[comment]: <> (* 1:19 order templates)
+[comment]: <> (* 1:23 views)
+[comment]: <> (* 1:32 templates)
+[comment]: <> (##Задания 3)
 [comment]: <> (1. Создать выпадающее меню для ссылки на личный кабинет пользователя в меню.)
 [comment]: <> (2. Создать приложение для работы с заказами пользователя.)
 [comment]: <> (3. Создать контроллеры CRUD для заказа на базе Django CBV.)
 [comment]: <> (4. Реализовать обновление статуса заказа при совершении покупки.)
 [comment]: <> (5. Обновить контроллеры проекта – перевести на Django CBV.)
-6. *Организовать работу со статусом заказов в админке (имитация обработки заказа в магазине).
-
-
+[comment]: <> (6. *Организовать работу со статусом заказов в админке &#40;имитация обработки заказа в магазине&#41;.)
 [comment]: <> (##Урок 2)
 [comment]: <> (* 0:08 приложение vk)
 [comment]: <> (* 0:11 pip install social_auth_app_django)
