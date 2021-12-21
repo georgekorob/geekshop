@@ -1,67 +1,55 @@
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView
+
+from adminapp.mixins import PageTitleMixin
 from basketapp.models import Basket
+from mainapp.context_processors import basket_context
 from mainapp.models import Product
 
 
-# Create your views here.
-@login_required
-def basket_add(request, id):
-    if request.is_ajax():
-        user_select = request.user
-        product = Product.objects.get(id=id)
-        baskets = Basket.objects.filter(user=user_select, product=product)
+class BasketCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
+    model = Basket
+    fields = []
+    success_url = reverse_lazy('mainapp:products')
+
+    def form_valid(self, form):
+        prod_id = self.kwargs.get('pk')
+        req_user = self.request.user
+        product = Product.objects.get(id=prod_id)
+        baskets = Basket.objects.filter(user=req_user, product=product)
         if baskets:
             basket = baskets.first()
             basket.quantity += 1
             basket.save()
         else:
-            Basket.objects.create(user=user_select, product=product, quantity=1)
-
-        cat_id = int(request.GET.get('cat_id', 0))
-        if cat_id:
-            products = Product.objects.filter(category=cat_id)
-        else:
-            products = Product.objects.all()
-        paginator = Paginator(products, 3)
-        page = request.GET.get('page', 1)
-        try:
-            page_obj = paginator.page(page)
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)
-        context = {'page_obj': page_obj, }
-        result = render_to_string('mainapp/includes/card.html', context)
-        return JsonResponse({'result': result})
+            Basket.objects.create(user=req_user, product=product, quantity=1)
+        return JsonResponse({'': ''})
 
 
-@login_required
-def basket_remove(request, id):
-    Basket.objects.get(id=id).delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+class BasketUpdate(LoginRequiredMixin, PageTitleMixin, UpdateView):
+    model = Basket
+    fields = []
 
-
-@login_required
-def basket_edit(request, id, quantity):
-    if request.is_ajax():
-        basket = Basket.objects.get(id=id)
-        if quantity > 0:
-            basket.quantity = quantity
+    def form_valid(self, form):
+        qnty = int(form.data.get('qnty'))
+        basket = self.get_object()
+        if qnty > 0:
+            basket.quantity = qnty
             basket.save()
         else:
             basket.delete()
+        result = render_to_string('basketapp/basket.html', basket_context(self.request))
+        return JsonResponse({'result': result})
 
-        baskets = Basket.objects.filter(user=request.user)
-        total_sum = sum(basket.prod for basket in baskets)
-        total_quantity = sum(basket.quantity for basket in baskets)
-        context = {'baskets': baskets,
-                   'total_sum': total_sum,
-                   'total_quantity': total_quantity, }
-        result = render_to_string('basketapp/basket.html', context)
+
+class BasketDelete(LoginRequiredMixin, PageTitleMixin, DeleteView):
+    model = Basket
+
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+        result = render_to_string('basketapp/basket.html', basket_context(self.request))
         return JsonResponse({'result': result})

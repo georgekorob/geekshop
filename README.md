@@ -4,30 +4,49 @@
 
 Коробанов Георгий.
 
-##Урок 2
-* 0:08 приложение vk
-* 0:11 pip install social_auth_app_django
-* 0:12 settings
-* 0:16 backend hw
-* 0:18 urls
-* 0:20 template login
-* 0:30 models
-* 0:50 forms
-* 0:55 view
-* 1:01 template profile
-* 1:17 settings
-* 1:24 pipelines
-* 1:43 test
-* 1:47 homework
+[comment]: <> (##Урок 4)
 
-##Задания 2
+[comment]: <> (##Задания 4)
+
+[comment]: <> (##Урок 3)
+[comment]: <> (* 0:15 photo and lang)
+[comment]: <> (* 0:28 basket)
+[comment]: <> (* 0:35 models)
+[comment]: <> (* 0:53 views)
+[comment]: <> (* 1:00 forms)
+[comment]: <> (* 1:05 template user dropdown)
+[comment]: <> (* 1:19 order templates)
+[comment]: <> (* 1:23 views)
+[comment]: <> (* 1:32 templates)
+[comment]: <> (##Задания 3)
+[comment]: <> (1. Создать выпадающее меню для ссылки на личный кабинет пользователя в меню.)
+[comment]: <> (2. Создать приложение для работы с заказами пользователя.)
+[comment]: <> (3. Создать контроллеры CRUD для заказа на базе Django CBV.)
+[comment]: <> (4. Реализовать обновление статуса заказа при совершении покупки.)
+[comment]: <> (5. Обновить контроллеры проекта – перевести на Django CBV.)
+[comment]: <> (6. *Организовать работу со статусом заказов в админке &#40;имитация обработки заказа в магазине&#41;.)
+[comment]: <> (##Урок 2)
+[comment]: <> (* 0:08 приложение vk)
+[comment]: <> (* 0:11 pip install social_auth_app_django)
+[comment]: <> (* 0:12 settings)
+[comment]: <> (* 0:16 backend hw)
+[comment]: <> (* 0:18 urls)
+[comment]: <> (* 0:20 template login)
+[comment]: <> (* 0:30 models)
+[comment]: <> (* 0:50 forms)
+[comment]: <> (* 0:55 view)
+[comment]: <> (* 1:01 template profile)
+[comment]: <> (* 1:17 settings)
+[comment]: <> (* 1:24 pipelines)
+[comment]: <> (* 1:43 test)
+[comment]: <> (* 1:47 homework)
+[comment]: <> (##Задания 2)
 [comment]: <> (1. Реализовать в проекте простой вариант аутентификации пользователя через социальную сеть VK+.)
 [comment]: <> (2. Поработать со связью моделей «один-к-одному»: создать профиль пользователя и обеспечить возможность его редактирования.)
 [comment]: <> (3. Реализовать автоматическое заполнение профиля пользователя при аутентификации через социальную сеть.)
 [comment]: <> (4. Проверить работу исключения «AuthForbidden», например, задав при проверке минимальный возраст 100 лет.)
 [comment]: <> (5. *Получить и сохранить язык из сети VK+.)
 [comment]: <> (6. *Получить и сохранить foto из сети VK+.)
-
 [comment]: <> (##Урок 1)
 [comment]: <> (* 0:17 models user activation_key)
 [comment]: <> (* 0:23 forms register save)
