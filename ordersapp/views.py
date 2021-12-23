@@ -42,7 +42,7 @@ class OrderCreate(PageTitleMixin, CreateView):
                     form.initial['product'] = basket_item[num].product
                     form.initial['quantity'] = basket_item[num].quantity
                     form.initial['price'] = basket_item[num].product.price
-                # basket_item.delete()
+                basket_item.delete()
             else:
                 formset = order_form_set()
         context['orderitems'] = formset
