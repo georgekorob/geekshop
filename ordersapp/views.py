@@ -11,6 +11,7 @@ from adminapp.mixins import PageTitleMixin
 from basketapp.models import Basket
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
+from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
 
 
 class OrderList(PageTitleMixin, ListView):
