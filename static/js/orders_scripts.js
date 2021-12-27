@@ -1,5 +1,5 @@
 "use strict";
-let quantity, price, orderitem_num, delta_quantity, orderitem_quantity, delta_cost;
+let quantity, price, orderitem_num, delta_quantity, delta_cost;
 let quantity_arr = []
 let price_arr = []
 let total_forms, order_total_quantity, order_total_cost;
@@ -7,10 +7,10 @@ let $orderForm, $orderTotalQuantityDOM, $orderTotalCostDOM;
 
 function orderSummaryUpdate(orderitem_price, delta_quantity) {
     delta_cost = orderitem_price * delta_quantity;
-    order_total_cost = Number((order_total_cost + delta_cost).toFixed(2));
+    order_total_cost = (order_total_cost + delta_cost);
     order_total_quantity = order_total_quantity + delta_quantity;
-    $('.order_total_quantity').html(order_total_quantity.toString());
-    $('.order_total_cost').html(order_total_cost.toString() + ',00');
+    $orderTotalQuantityDOM.html(order_total_quantity.toString());
+    $orderTotalCostDOM.html(order_total_cost.toFixed(2));
 }
 
 function deleteOrderItem(row) {
@@ -46,7 +46,8 @@ function changeOrderItemPk(event) {
                     if (isNaN(quantity_arr[orderitem_num_select])) {
                         quantity_arr[orderitem_num_select] = 0
                     }
-                    let priceHtml = `<span>${data.price.toString().replace('.', ',')}</span> руб`;
+                    let priceHtml = `<span>${data.price.replace('.', ',')}</span> руб`;
+                    // $orderTotalCostDOM.html(Number(order_total_cost.toFixed(2)).toString());
                     let currentTr = $('.order_form table').find('tr:eq(' + (orderitem_num_select + 1) + ')');
                     currentTr.find('td:eq(2)').html(priceHtml);
                     let current_quantity = currentTr.find('input[type="number"]').val();
@@ -65,6 +66,7 @@ function editQuantity(event) {
     let target = event.target;
     orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
     if (price_arr[orderitem_num]) {
+        let orderitem_quantity = parseInt(target.value)
         delta_quantity = orderitem_quantity - quantity_arr[orderitem_num];
         quantity_arr[orderitem_num] = orderitem_quantity;
         orderSummaryUpdate(price_arr[orderitem_num], delta_quantity);
@@ -90,7 +92,7 @@ function orderSummary() {
         order_total_cost += quantity_arr[i] * price_arr[i];
     }
     $orderTotalQuantityDOM.html(order_total_quantity.toString());
-    $orderTotalCostDOM.html(Number(order_total_cost.toFixed(2)).toString());
+    $orderTotalCostDOM.html(order_total_cost.toFixed(2));
 }
 
 window.onload = function () {
@@ -117,5 +119,5 @@ window.onload = function () {
     });
 
     // при изменении поля товара
-    $('.order_form select').change((event) => changeOrderItemPk(event));
+    $orderForm.on('change', 'select', (event) => changeOrderItemPk(event));
 }

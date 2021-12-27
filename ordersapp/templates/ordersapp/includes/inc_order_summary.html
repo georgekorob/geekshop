@@ -15,13 +15,11 @@
    <div class="h2">Новый заказ</div>
    <hr>
    <div class="h4">заказчик: {{ user.last_name }} {{ user.first_name }} </div>
-   {% if baskets %}
-       <div class="h4">
-           общее количество товаров: <span class="order_total_quantity">{{ total_quantity }}</span>
-       </div>
-       <div class="h3">
-           общая стоимость: <span class="order_total_cost">{{ total_sum }}</span> руб
-       </div>
-   {% endif %}
+   <div class="h4">
+       общее количество товаров: <span class="order_total_quantity">{% if baskets %}{{ total_quantity }}{% else %}0{% endif %}</span>
+   </div>
+   <div class="h3">
+       общая стоимость: <span class="order_total_cost">{% if baskets %}{{ total_sum }}{% else %}0{% endif %}</span> руб
+   </div>
 {% endif %}
 <hr>
