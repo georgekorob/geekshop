@@ -1,7 +1,6 @@
 .idea
 pycache/
 db.sqlite3
-/_README.md
 /media/users_image/**
 /media/product_image/**
 /.env

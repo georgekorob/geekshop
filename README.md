@@ -5,11 +5,11 @@
 Коробанов Георгий.
 
 ##Урок 5
-* 0:10 bug fixed
-* `this` add to requirements.txt and fill_db
+* ~~0:10 bug fixed~~
+* `this` ~~add to requirements.txt and fill_db~~
 * 0:41 reg.ru login | vps | заказать | ubuntu
-* 0:43 settings databases postgesql
-* 0:45 lib psycopg2-binary | activate venv | pip freeze > requirements.txt | git push
+* ~~0:43 settings databases postgesql~~
+* ~~0:45 lib psycopg2-binary | activate venv | pip freeze > requirements.txt | git push~~
 * 0:47 mail ip | terminal ssh ssh root@151.248.117.226 login | without pass ssh-copy-id root@151.248.117.226
 * 0:49 ssh-keygen | cat /root/.ssh/id_rsa.pub | copy
 * 0:50 repository settings | deploy keys | new | paste
@@ -31,8 +31,8 @@
 * 1:25 scp root@151.248.117.226:/tmp/history.txt ./Documents/
 
 ##Задания 5
-1. Создать файл зависимостей «requirements.txt» для проекта.
-2. Экспортировать данные из базы.
+[comment]: <> (1. Создать файл зависимостей «requirements.txt» для проекта.)
+[comment]: <> (2. Экспортировать данные из базы.)
 3. Установить и настроить сервер Ubuntu Server 17.
 4. Развернуть проект на сервере.
 
