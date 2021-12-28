@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, TemplateView
 
@@ -39,3 +40,9 @@ class ProductList(ListView):
 
 class ProductDetail(DetailView):
     model = Product
+
+
+def product_price(request, pk):
+    if request.is_ajax():
+        product = Product.objects.filter(pk=int(pk)).first()
+        return JsonResponse({'price': product.price})

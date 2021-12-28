@@ -9,8 +9,10 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 from adminapp.mixins import PageTitleMixin
 from basketapp.models import Basket
+from mainapp.context_processors import basket_context
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
+from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
 
 
 class OrderList(PageTitleMixin, ListView):
@@ -24,11 +26,12 @@ class OrderList(PageTitleMixin, ListView):
 class OrderCreate(PageTitleMixin, CreateView):
     model = Order
     fields = []
-    success_url = reverse_lazy('orders:list')
+    success_url = reverse_lazy('ordersapp:list')
     title = 'создание заказа'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update(basket_context(self.request))
 
         order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
         if self.request.POST:
@@ -42,7 +45,7 @@ class OrderCreate(PageTitleMixin, CreateView):
                     form.initial['product'] = basket_item[num].product
                     form.initial['quantity'] = basket_item[num].quantity
                     form.initial['price'] = basket_item[num].product.price
-                # basket_item.delete()
+                basket_item.delete()
             else:
                 formset = order_form_set()
         context['orderitems'] = formset
@@ -67,7 +70,7 @@ class OrderCreate(PageTitleMixin, CreateView):
 class OrderUpdate(PageTitleMixin, UpdateView):
     model = Order
     fields = []
-    success_url = reverse_lazy('orders:list')
+    success_url = reverse_lazy('ordersapp:list')
     title = 'обновление заказа'
 
     def get_context_data(self, **kwargs):
@@ -101,7 +104,7 @@ class OrderUpdate(PageTitleMixin, UpdateView):
 
 class OrderDelete(PageTitleMixin, DeleteView):
     model = Order
-    success_url = reverse_lazy('orders:list')
+    success_url = reverse_lazy('ordersapp:list')
     title = 'удаление заказа'
 
 
@@ -114,4 +117,4 @@ def order_forming_complete(request, pk):
     order = get_object_or_404(Order, pk=pk)
     order.status = Order.SEND_TO_PROCEED
     order.save()
-    return HttpResponseRedirect(reverse('orders:list'))
+    return HttpResponseRedirect(reverse('ordersapp:list'))

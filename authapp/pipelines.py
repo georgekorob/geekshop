@@ -1,6 +1,9 @@
 from collections import OrderedDict
 from datetime import datetime
 from urllib.parse import urlunparse, urlencode
+from urllib.request import urlopen
+
+from django.core.files.base import ContentFile
 from django.utils import timezone
 from social_core.exceptions import AuthForbidden
 from authapp.models import UserProfile
@@ -43,11 +46,12 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         uid_vk = data.get('id')
         username_vk = kwargs.get('details').get('username')
         photo_link = data['photo_400_orig']
-        photo_response = requests.get(photo_link)
-        path_photo = f'users_image/{uid_vk}_{username_vk}.jpg'
-        with open(MEDIA_ROOT / path_photo, 'wb') as photo:
-            photo.write(photo_response.content)
-        user.image = path_photo
+        # photo_response = requests.get(photo_link)
+        # path_photo = f'users_image/{uid_vk}_{username_vk}.jpg'
+        # with open(MEDIA_ROOT / path_photo, 'wb') as photo:
+        #     photo.write(photo_response.content)
+        # user.image = path_photo
+        user.image.save(f'users_image/{uid_vk}_{username_vk}.jpg', ContentFile(urlopen(photo_link).read()))
 
     if data['personal']['langs']:
         user.userprofile.langs = data['personal']['langs'][0] if len(data['personal']['langs'][0]) > 0 else 'EN'
