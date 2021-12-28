@@ -2,6 +2,5 @@
 pycache/
 db.sqlite3
 /media/users_image/**
-/media/product_image/**
 /.env
 /users.json

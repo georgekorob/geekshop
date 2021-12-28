@@ -5,12 +5,12 @@
 Коробанов Георгий.
 
 ##Урок 5
-* ~~0:10 bug fixed~~
-* `this` ~~add to requirements.txt and fill_db~~
+* 0:10 bug fixed
+* `this` add to requirements.txt and fill_db
 * 0:41 reg.ru login | vps | заказать | ubuntu
-* ~~0:43 settings databases postgesql~~
-* ~~0:45 lib psycopg2-binary | activate venv | pip freeze > requirements.txt | git push~~
-* 0:47 mail ip | terminal ssh ssh root@151.248.117.226 login | without pass ssh-copy-id root@151.248.117.226
+* 0:43 settings databases postgesql
+* 0:45 lib psycopg2-binary | activate venv | pip freeze > requirements.txt | git push
+* 0:47 mail ip | terminal ssh root@89.108.81.8 login | without pass ssh-copy-id root@89.108.81.8
 * 0:49 ssh-keygen | cat /root/.ssh/id_rsa.pub | copy
 * 0:50 repository settings | deploy keys | new | paste
 * 0:51 apt update | apt install nginx | apt install postgresql postgresql-contrib | apt install python3-venv | apt install git
@@ -19,24 +19,26 @@
 * 0:58 python3 -m venv env | source env/bin/activate | git checkout lesson_2_5 | cd geekshop/geekshop
 * 0:59 pip install -r requirements.txt | pip install `wheel`
 * 1:02 psql -U postgres | create database geekshop; | exit;
-* 1:03 pip install `social-auth-app-django` | python3 manage.py migrate | python3 manage.py fill_db
-* 1:04 python3 manage.py `createsuperuser` | python3 manage.py runserver 0.0.0.0:8000
+* 1:03 pip install~~ `social-auth-app-django` ~~| python3 manage.py migrate | python3 manage.py fill_db
+* 1:04 python3 manage.py~~ `createsuperuser` ~~| python3 manage.py runserver 0.0.0.0:8000
 * 1:07 sudo nano /etc/systemd/system/gunicorn.service | edit | pip install `gunicorn`
-* 1:12 sudo systemctl enable gunicorn | sudo systemctl start gunicorn | sudo systemctl status gunicorn
+* 1:12 systemctl enable gunicorn | sudo systemctl start gunicorn | sudo systemctl status gunicorn
 * 1:13 chown -R django /home/django/
 * 1:14 sudo nano /etc/nginx/sites-available/geekshop | edit | systemctl disable/enable/status gunicorn
 * 1:20 sudo ln -s /etc/nginx/sites-available/geekshop /etc/nginx/sites-enabled
 * 1:21 rm /etc/nginx/sites-enabled/default | systemctl restart nginx | sudo nginx -t
 * 1:22 tail -f /var/log/nginx/error.log | cd ~ | history > /tmp/history.txt | exit
-* 1:25 scp root@151.248.117.226:/tmp/history.txt ./Documents/
+* 1:25 scp root@89.108.81.8:/tmp/history.txt ./Documents/
+* scp D:\Programming\geekshop\.env root@89.108.81.8:/home/django/geekshop/.env
+* scp D:\Programming\geekshop\users.json root@89.108.81.8:/home/django/geekshop/users.json
+* scp D:\Programming\geekshop\media\product_image\ root@89.108.81.8:/home/django/geekshop/media/product_image/
 
 ##Задания 5
 [comment]: <> (1. Создать файл зависимостей «requirements.txt» для проекта.)
 [comment]: <> (2. Экспортировать данные из базы.)
-3. Установить и настроить сервер Ubuntu Server 17.
-4. Развернуть проект на сервере.
-
-Так как образ виртуальной машины достаточно большого размера, вместо него необходимо в архиве с ДЗ выслать скриншоты с выполненными шагами. Если на каком-то шаге начались проблемы – необходимо написать о них в файле «readme.txt». Если удастся развернуть проект на реальном хостинге – высылайте ссылку.
+[comment]: <> (3. Установить и настроить сервер Ubuntu Server 17.)
+[comment]: <> (4. Развернуть проект на сервере.)
+[comment]: <> (Так как образ виртуальной машины достаточно большого размера, вместо него необходимо в архиве с ДЗ выслать скриншоты с выполненными шагами. Если на каком-то шаге начались проблемы – необходимо написать о них в файле «readme.txt». Если удастся развернуть проект на реальном хостинге – высылайте ссылку.)
 
 [comment]: <> (##Урок 4)
 [comment]: <> (* 0:18 basket.delete)
