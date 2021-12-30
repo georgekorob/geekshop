@@ -13,7 +13,7 @@ class UserAdminRegisterForm(UserRegisterForm):
         fields = ('username', 'email', 'image', 'first_name', 'last_name', 'age', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
-        super(UserAdminRegisterForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
@@ -25,7 +25,7 @@ class UserAdminProfileForm(UserProfileForm):
     username = forms.CharField(widget=forms.TextInput())
 
     def __init__(self, *args, **kwargs):
-        super(UserAdminProfileForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.fields['email'].widget.attrs['readonly'] = False
         self.fields['username'].widget.attrs['readonly'] = False
@@ -43,13 +43,17 @@ class CategoryCreateForm(forms.ModelForm):
         fields = ['name', 'description']
 
     def __init__(self, *args, **kwargs):
-        super(CategoryCreateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
 
+def get_categories():
+    return ProductCategory.objects.select_related().all()
+
+
 class ProductCreateForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
+    category = forms.ModelChoiceField(queryset=get_categories())
     image = forms.ImageField(widget=forms.FileInput)
 
     class Meta:
@@ -57,7 +61,7 @@ class ProductCreateForm(forms.ModelForm):
         fields = ['name', 'image', 'description', 'price', 'quantity', 'category']
 
     def __init__(self, *args, **kwargs):
-        super(ProductCreateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field_name == 'category':
                 field.widget.attrs['class'] = 'form-control'
@@ -67,6 +71,5 @@ class ProductCreateForm(forms.ModelForm):
 
 
 class ProductUpdateForm(ProductCreateForm):
-    category = forms.ModelChoiceField(queryset=ProductCategory.objects.all().select_related(),
-                                      empty_label=None)
+    category = forms.ModelChoiceField(queryset=get_categories(), empty_label=None)
     image = forms.ImageField(widget=forms.FileInput, required=False)

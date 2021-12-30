@@ -15,6 +15,7 @@ from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, User
 from authapp.models import User
 from basketapp.models import Basket
 from authapp.signals import create_user_profile
+from mainapp.context_processors import basket_context
 
 
 class UserLoginView(PageTitleMixin, LoginView):
@@ -79,10 +80,7 @@ class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
-        baskets = Basket.objects.filter(user=self.request.user)
-        # context['baskets'] = baskets
-        context['total_sum'] = sum(basket.prod for basket in baskets)
-        context['total_quantity'] = sum(basket.quantity for basket in baskets)
+        context.update(basket_context(self.request))
         return context
 
     def post(self, request, *args, **kwargs):

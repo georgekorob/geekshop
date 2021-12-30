@@ -18,7 +18,7 @@ class UserLoginForm(AuthenticationForm):
         fields = ('username', 'password')
 
     def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
         for field_name, field in self.fields.items():
@@ -33,7 +33,7 @@ class UserRegisterForm(UserCreationForm):
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
-        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['email'].widget.attrs['placeholder'] = 'Введите адрес эл.почты'
         self.fields['first_name'].widget.attrs['placeholder'] = 'Ваше имя'
@@ -62,7 +62,7 @@ class UserProfileForm(UserChangeForm):
         fields = ('username', 'email', 'first_name', 'last_name', 'image', 'age')
 
     def __init__(self, *args, **kwargs):
-        super(UserProfileForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['readonly'] = True
         for field_name, field in self.fields.items():
@@ -82,7 +82,7 @@ class UserProfileEditForm(forms.ModelForm):
         exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        super(UserProfileEditForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field_name != 'gender':
                 field.widget.attrs['class'] = 'form-control py-4'

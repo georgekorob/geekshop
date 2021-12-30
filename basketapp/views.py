@@ -20,13 +20,14 @@ class BasketCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
         prod_id = self.kwargs.get('pk')
         req_user = self.request.user
         product = Product.objects.get(id=prod_id)
-        baskets = Basket.objects.filter(user=req_user, product=product)
+        baskets = Basket.objects.filter(user_id=req_user.id, product_id=product.id)
         if baskets:
             basket = baskets.first()
             basket.quantity += 1
             basket.save()
         else:
-            Basket.objects.create(user=req_user, product=product, quantity=1)
+            # Basket.objects.create(user=req_user, product=product, quantity=1)
+            Basket.objects.create(user_id=req_user.id, product_id=product.id, quantity=1)
         return JsonResponse({'': ''})
 
 
