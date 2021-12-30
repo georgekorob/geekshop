@@ -7,11 +7,14 @@ defusedxml==0.7.1
 Django==3.2
 django-debug-toolbar==3.2.4
 django-debug-toolbar-template-profiler==2.0.2
+django-extensions==3.1.5
 idna==3.3
 oauthlib==3.1.1
 Pillow==8.4.0
 pycparser==2.21
+pydotplus==2.0.2
 PyJWT==2.3.0
+pyparsing==3.0.6
 python-dotenv==0.19.2
 python-gettext==4.0
 python3-openid==3.2.0

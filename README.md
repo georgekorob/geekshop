@@ -11,11 +11,11 @@
 [comment]: <> (* 0:24 STATIC_ROOT | collectstatic)
 [comment]: <> (* 0:27 restart gunicorn)
 [comment]: <> (* 0:30 vk)
-[comment]: <> (* 0:31 debug toolbar)
+* 0:31 debug toolbar
 [comment]: <> (* 0:43 card.html)
 * 0:47 select_related
-* 1:10 pip install django-extensions | python manage.py show_urls > geekshop_urls.txt
-* 1:12 validate_templates | pip install pydotplus graph_models | pycharm visual db
+[comment]: <> (* 1:10 pip install django-extensions | python manage.py show_urls > geekshop_urls.txt)
+[comment]: <> (* 1:12 validate_templates | pip install pydotplus graph_models | pycharm visual db)
 * 1:17 sudo apt install siege | siege -f urls.txt -d1 -r29 -c1 | --debug
 * 1:23 http://89.108.81.8/auth/login/ POST username=...&password=... | # csrf
 * 1:34 login-url in siege
@@ -25,12 +25,12 @@
 [comment]: <> (* ssh подключение &#40;pycharm, cmd&#41;)
 [comment]: <> (* восстановить функционал vk)
 1. Установить приложение «django-debug-toolbar». Оценить время загрузки страниц. Найти самые медленные контроллеры. Заполнить таблицу с количеством запросов и дубликатов на страницах проекта.
-2. Визуализировать структуру моделей проекта при помощи «django_extensions», создать файл «geekshop_urls.txt» с URL-адресами проекта.
+[comment]: <> (2. Визуализировать структуру моделей проекта при помощи «django_extensions», создать файл «geekshop_urls.txt» с URL-адресами проекта.)
 3. Установить утилиту «siege» и провести функциональное тестирование. Зафиксировать результаты в текстовом файле (какие контроллеры работали с ошибками).
 4. Провести нагрузочное тестирование отдельных страниц и записать результаты в таблицу.
 5. Провести тестирование в режиме интернета. Записать данные в таблицу. Определить условия, при которых начинаются отказы.
 6. Провести оптимизацию работы с БД в проекте. Оценить эффект.
-7. Визуализация БД
+[comment]: <> (7. Визуализация БД)
 
 [comment]: <> (##Урок 5)
 [comment]: <> (* 0:10 bug fixed)
