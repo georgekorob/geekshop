@@ -5,14 +5,14 @@
 Коробанов Георгий.
 
 ##Урок 6
-* 0:14 pip install django-debug-toolbar | pip install django-debug-toolbar-template-profiler
-* 0:17 settings 'debug_toolbar', 'template_profiler_panel' | if DEBUG: ...
-* 0:19 urls
-* 0:24 STATIC_ROOT | collectstatic
-* 0:27 restart gunicorn
-* 0:30 vk
-* 0:31 debug toolbar
-* 0:43 card.html
+[comment]: <> (* 0:14 pip install django-debug-toolbar | pip install django-debug-toolbar-template-profiler)
+[comment]: <> (* 0:17 settings 'debug_toolbar', 'template_profiler_panel' | if DEBUG: ...)
+[comment]: <> (* 0:19 urls)
+[comment]: <> (* 0:24 STATIC_ROOT | collectstatic)
+[comment]: <> (* 0:27 restart gunicorn)
+[comment]: <> (* 0:30 vk)
+[comment]: <> (* 0:31 debug toolbar)
+[comment]: <> (* 0:43 card.html)
 * 0:47 select_related
 * 1:10 pip install django-extensions | python manage.py show_urls > geekshop_urls.txt
 * 1:12 validate_templates | pip install pydotplus graph_models | pycharm visual db
@@ -22,8 +22,8 @@
 * 1:42 hw
 
 ##Задания 6
-* ssh подключение (pycharm, cmd)
-* восстановить функционал vk
+[comment]: <> (* ssh подключение &#40;pycharm, cmd&#41;)
+[comment]: <> (* восстановить функционал vk)
 1. Установить приложение «django-debug-toolbar». Оценить время загрузки страниц. Найти самые медленные контроллеры. Заполнить таблицу с количеством запросов и дубликатов на страницах проекта.
 2. Визуализировать структуру моделей проекта при помощи «django_extensions», создать файл «geekshop_urls.txt» с URL-адресами проекта.
 3. Установить утилиту «siege» и провести функциональное тестирование. Зафиксировать результаты в текстовом файле (какие контроллеры работали с ошибками).
