@@ -4,42 +4,68 @@
 
 Коробанов Георгий.
 
-##Урок 5
-* 0:10 bug fixed
-* `this` add to requirements.txt and fill_db
-* 0:41 reg.ru login | vps | заказать | ubuntu
-* 0:43 settings databases postgesql
-* 0:45 lib psycopg2-binary | activate venv | pip freeze > requirements.txt | git push
-* 0:47 mail ip | terminal ssh root@89.108.81.8 login | without pass ssh-copy-id root@89.108.81.8
-* 0:49 ssh-keygen | cat /root/.ssh/id_rsa.pub | copy
-* 0:50 repository settings | deploy keys | new | paste
-* 0:51 apt update | apt install nginx | apt install postgresql postgresql-contrib | apt install python3-venv | apt install git
-* 0:54 nano /etc/postgresql/12/main/pg_hba.conf | peer -> trust | systemctl restart postgresql | systemctl status postgresql
-* 0:56 useradd -g www-data -m django | cd /home/django/ | git clone git@github.com:georgekorob/geekshop.git
-* 0:58 python3 -m venv env | source env/bin/activate | git checkout lesson_2_5 | cd geekshop/geekshop
-* 0:59 pip install -r requirements.txt | pip install `wheel`
-* 1:02 psql -U postgres | create database geekshop; | exit;
-* 1:03 pip install~~ `social-auth-app-django` ~~| python3 manage.py migrate | python3 manage.py fill_db
-* 1:04 python3 manage.py~~ `createsuperuser` ~~| python3 manage.py runserver 0.0.0.0:8000
-* 1:07 sudo nano /etc/systemd/system/gunicorn.service | edit | pip install `gunicorn`
-* 1:12 systemctl enable gunicorn | sudo systemctl start gunicorn | sudo systemctl status gunicorn
-* 1:13 chown -R django /home/django/
-* 1:14 sudo nano /etc/nginx/sites-available/geekshop | edit | systemctl disable/enable/status gunicorn
-* 1:20 sudo ln -s /etc/nginx/sites-available/geekshop /etc/nginx/sites-enabled
-* 1:21 rm /etc/nginx/sites-enabled/default | systemctl restart nginx | sudo nginx -t
-* 1:22 tail -f /var/log/nginx/error.log | cd ~ | history > /tmp/history.txt | exit
-* 1:25 scp root@89.108.81.8:/tmp/history.txt ./Documents/
-* scp D:\Programming\geekshop\.env root@89.108.81.8:/home/django/geekshop/.env
-* scp D:\Programming\geekshop\users.json root@89.108.81.8:/home/django/geekshop/users.json
-* scp D:\Programming\geekshop\media\product_image\ root@89.108.81.8:/home/django/geekshop/media/product_image/
+##Урок 6
+* 0:14 pip install django-debug-toolbar | pip install django-debug-toolbar-template-profiler
+* 0:17 settings 'debug_toolbar', 'template_profiler_panel' | if DEBUG: ...
+* 0:19 urls
+* 0:24 STATIC_ROOT | collectstatic
+* 0:27 restart gunicorn
+* 0:30 vk
+* 0:31 debug toolbar
+* 0:43 card.html
+* 0:47 select_related
+* 1:10 pip install django-extensions | python manage.py show_urls > geekshop_urls.txt
+* 1:12 validate_templates | pip install pydotplus graph_models | pycharm visual db
+* 1:17 sudo apt install siege | siege -f urls.txt -d1 -r29 -c1 | --debug
+* 1:23 http://89.108.81.8/auth/login/ POST username=...&password=... | # csrf
+* 1:34 login-url in siege
+* 1:42 hw
 
-##Задания 5
+##Задания 6
+* ssh подключение (pycharm, cmd)
+* восстановить функционал vk
+1. Установить приложение «django-debug-toolbar». Оценить время загрузки страниц. Найти самые медленные контроллеры. Заполнить таблицу с количеством запросов и дубликатов на страницах проекта.
+2. Визуализировать структуру моделей проекта при помощи «django_extensions», создать файл «geekshop_urls.txt» с URL-адресами проекта.
+3. Установить утилиту «siege» и провести функциональное тестирование. Зафиксировать результаты в текстовом файле (какие контроллеры работали с ошибками).
+4. Провести нагрузочное тестирование отдельных страниц и записать результаты в таблицу.
+5. Провести тестирование в режиме интернета. Записать данные в таблицу. Определить условия, при которых начинаются отказы.
+6. Провести оптимизацию работы с БД в проекте. Оценить эффект.
+7. Визуализация БД
+
+[comment]: <> (##Урок 5)
+[comment]: <> (* 0:10 bug fixed)
+[comment]: <> (* `this` add to requirements.txt and fill_db)
+[comment]: <> (* 0:41 reg.ru login | vps | заказать | ubuntu)
+[comment]: <> (* 0:43 settings databases postgesql)
+[comment]: <> (* 0:45 lib psycopg2-binary | activate venv | pip freeze > requirements.txt | git push)
+[comment]: <> (* 0:47 mail ip | terminal ssh root@89.108.81.8 login | without pass ssh-copy-id root@89.108.81.8)
+[comment]: <> (* 0:49 ssh-keygen | cat /root/.ssh/id_rsa.pub | copy)
+[comment]: <> (* 0:50 repository settings | deploy keys | new | paste)
+[comment]: <> (* 0:51 apt update | apt install nginx | apt install postgresql postgresql-contrib | apt install python3-venv | apt install git)
+[comment]: <> (* 0:54 nano /etc/postgresql/12/main/pg_hba.conf | peer -> trust | systemctl restart postgresql | systemctl status postgresql)
+[comment]: <> (* 0:56 useradd -g www-data -m django | cd /home/django/ | git clone git@github.com:georgekorob/geekshop.git)
+[comment]: <> (* 0:58 python3 -m venv env | source env/bin/activate | git checkout lesson_2_5 | cd geekshop/geekshop)
+[comment]: <> (* 0:59 pip install -r requirements.txt | pip install `wheel`)
+[comment]: <> (* 1:02 psql -U postgres | create database geekshop; | exit;)
+[comment]: <> (* 1:03 pip install~~ `social-auth-app-django` ~~| python3 manage.py migrate | python3 manage.py fill_db)
+[comment]: <> (* 1:04 python3 manage.py~~ `createsuperuser` ~~| python3 manage.py runserver 0.0.0.0:8000)
+[comment]: <> (* 1:07 sudo nano /etc/systemd/system/gunicorn.service | edit | pip install `gunicorn`)
+[comment]: <> (* 1:12 systemctl enable gunicorn | sudo systemctl start gunicorn | sudo systemctl status gunicorn)
+[comment]: <> (* 1:13 chown -R django /home/django/)
+[comment]: <> (* 1:14 sudo nano /etc/nginx/sites-available/geekshop | edit | systemctl disable/enable/status gunicorn)
+[comment]: <> (* 1:20 sudo ln -s /etc/nginx/sites-available/geekshop /etc/nginx/sites-enabled)
+[comment]: <> (* 1:21 rm /etc/nginx/sites-enabled/default | systemctl restart nginx | sudo nginx -t)
+[comment]: <> (* 1:22 tail -f /var/log/nginx/error.log | cd ~ | history > /tmp/history.txt | exit)
+[comment]: <> (* 1:25 scp root@89.108.81.8:/tmp/history.txt ./Documents/)
+[comment]: <> (* scp D:\Programming\geekshop\.env root@89.108.81.8:/home/django/geekshop/.env)
+[comment]: <> (* scp D:\Programming\geekshop\users.json root@89.108.81.8:/home/django/geekshop/users.json)
+[comment]: <> (* scp D:\Programming\geekshop\media\product_image\ root@89.108.81.8:/home/django/geekshop/media/product_image/)
+[comment]: <> (##Задания 5)
 [comment]: <> (1. Создать файл зависимостей «requirements.txt» для проекта.)
 [comment]: <> (2. Экспортировать данные из базы.)
 [comment]: <> (3. Установить и настроить сервер Ubuntu Server 17.)
 [comment]: <> (4. Развернуть проект на сервере.)
 [comment]: <> (Так как образ виртуальной машины достаточно большого размера, вместо него необходимо в архиве с ДЗ выслать скриншоты с выполненными шагами. Если на каком-то шаге начались проблемы – необходимо написать о них в файле «readme.txt». Если удастся развернуть проект на реальном хостинге – высылайте ссылку.)
-
 [comment]: <> (##Урок 4)
 [comment]: <> (* 0:18 basket.delete)
 [comment]: <> (* 0:21 basket methods &#40;get_item, save, delete&#41;)
