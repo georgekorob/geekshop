@@ -53,12 +53,15 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+]
+if not DEBUG:
+    MIDDLEWARE.append('django.middleware.csrf.CsrfViewMiddleware')
+MIDDLEWARE.extend([
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-]
+])
 
 ROOT_URLCONF = 'geekshop.urls'
 
@@ -200,22 +203,16 @@ if IS_SERVER:
     }
 
 if DEBUG:
-    def show_toolbar(request):
-        return True
-
-
-    INSTALLED_APPS += [
+    INSTALLED_APPS.extend([
         'debug_toolbar',
         'template_profiler_panel',
         'django_extensions',
-    ]
+    ])
 
-    MIDDLEWARE += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ]
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
     DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+        'SHOW_TOOLBAR_CALLBACK': lambda x: True,
     }
 
     DEBUG_TOOLBAR_PANELS = [
