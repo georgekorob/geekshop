@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import socket
 
-IS_SERVER = (socket.gethostname() != 'George-PC')
+IS_SERVER = (socket.gethostname() != 'George-PC' and socket.gethostname() != 'korobanov-g574')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +54,9 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
-if not DEBUG:
+if DEBUG:
+    MIDDLEWARE.append('geekshop.mid.DisableCSRFMiddleware')
+else:
     MIDDLEWARE.append('django.middleware.csrf.CsrfViewMiddleware')
 MIDDLEWARE.extend([
     'django.contrib.auth.middleware.AuthenticationMiddleware',

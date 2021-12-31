@@ -39,7 +39,7 @@ class OrderCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
         if self.request.POST:
             formset = order_form_set(self.request.POST)
         else:
-            basket_item = Basket.objects.filter(user_id=self.request.user.id)
+            basket_item = context.get('baskets')
             if basket_item:
                 order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=basket_item.count())
                 formset = order_form_set()
@@ -79,10 +79,11 @@ class OrderUpdate(LoginRequiredMixin, PageTitleMixin, UpdateView):
         context = super().get_context_data(**kwargs)
 
         order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
+        queryset = self.object.orderitems.select_related()
         if self.request.POST:
-            formset = order_form_set(self.request.POST, instance=self.object)
+            formset = order_form_set(self.request.POST, instance=self.object, queryset=queryset)
         else:
-            formset = order_form_set(instance=self.object)
+            formset = order_form_set(instance=self.object, queryset=queryset)
             for form in formset:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price

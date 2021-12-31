@@ -4,34 +4,32 @@
 
 Коробанов Георгий.
 
-##Урок 6
+[comment]: <> (##Урок 6)
 [comment]: <> (* 0:14 pip install django-debug-toolbar | pip install django-debug-toolbar-template-profiler)
 [comment]: <> (* 0:17 settings 'debug_toolbar', 'template_profiler_panel' | if DEBUG: ...)
 [comment]: <> (* 0:19 urls)
 [comment]: <> (* 0:24 STATIC_ROOT | collectstatic)
 [comment]: <> (* 0:27 restart gunicorn)
 [comment]: <> (* 0:30 vk)
-* 0:31 debug toolbar
+[comment]: <> (* 0:31 debug toolbar)
 [comment]: <> (* 0:43 card.html)
-* 0:47 select_related
+[comment]: <> (* 0:47 select_related)
 [comment]: <> (* 1:10 pip install django-extensions | python manage.py show_urls > geekshop_urls.txt)
 [comment]: <> (* 1:12 validate_templates | pip install pydotplus graph_models | pycharm visual db)
-* 1:17 sudo apt install siege | siege -f urls.txt -d1 -r29 -c1 | --debug
-* 1:23 http://89.108.81.8/auth/login/ POST username=...&password=... | # csrf
-* 1:34 login-url in siege
-* 1:42 hw
-
-##Задания 6
+[comment]: <> (* 1:17 sudo apt install siege | siege -f urls.txt -d1 -r29 -c1 | --debug)
+[comment]: <> (* 1:23 http://89.108.81.8/auth/login/ POST username=...&password=... | # csrf)
+[comment]: <> (* 1:34 login-url in siege)
+[comment]: <> (* 1:42 hw)
+[comment]: <> (##Задания 6)
 [comment]: <> (* ssh подключение &#40;pycharm, cmd&#41;)
 [comment]: <> (* восстановить функционал vk)
-1. Установить приложение «django-debug-toolbar». Оценить время загрузки страниц. Найти самые медленные контроллеры. Заполнить таблицу с количеством запросов и дубликатов на страницах проекта.
+[comment]: <> (1. Установить приложение «django-debug-toolbar». Оценить время загрузки страниц. Найти самые медленные контроллеры. Заполнить таблицу с количеством запросов и дубликатов на страницах проекта.)
 [comment]: <> (2. Визуализировать структуру моделей проекта при помощи «django_extensions», создать файл «geekshop_urls.txt» с URL-адресами проекта.)
-3. Установить утилиту «siege» и провести функциональное тестирование. Зафиксировать результаты в текстовом файле (какие контроллеры работали с ошибками).
-4. Провести нагрузочное тестирование отдельных страниц и записать результаты в таблицу.
-5. Провести тестирование в режиме интернета. Записать данные в таблицу. Определить условия, при которых начинаются отказы.
-6. Провести оптимизацию работы с БД в проекте. Оценить эффект.
+[comment]: <> (3. Установить утилиту «siege» и провести функциональное тестирование. Зафиксировать результаты в текстовом файле &#40;какие контроллеры работали с ошибками&#41;.)
+[comment]: <> (4. Провести нагрузочное тестирование отдельных страниц и записать результаты в таблицу.)
+[comment]: <> (5. Провести тестирование в режиме интернета. Записать данные в таблицу. Определить условия, при которых начинаются отказы.)
+[comment]: <> (6. Провести оптимизацию работы с БД в проекте. Оценить эффект.)
 [comment]: <> (7. Визуализация БД)
-
 [comment]: <> (##Урок 5)
 [comment]: <> (* 0:10 bug fixed)
 [comment]: <> (* `this` add to requirements.txt and fill_db)
