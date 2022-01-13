@@ -5,8 +5,12 @@ from mainapp.models import ProductCategory, Product
 
 
 def load_from_json(file_name):
-    with open(file_name, mode='r', encoding='utf-8') as infile:
-        return json.load(infile)
+    try:
+        with open(file_name, mode='r', encoding='utf-8') as infile:
+            return json.load(infile)
+    except UnicodeDecodeError:
+        with open(file_name, mode='r', encoding='windows-1251') as infile:
+            return json.load(infile)
 
 
 class Command(BaseCommand):
