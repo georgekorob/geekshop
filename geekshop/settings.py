@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import socket
 
-IS_SERVER = (socket.gethostname() != 'George-PC' and socket.gethostname() != 'korobanov-g574')
+IS_SERVER = socket.gethostname() == 'Raspi'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -4,6 +4,37 @@
 
 Коробанов Георгий.
 
+##Урок 7
+* 0:20 get_item_cached related_name
+* 0:23 **@cached_property [1]**
+* 0:39 get_summary
+* 0:43 **with [2]** templates | 1:46 correct =
+* 0:47 apt install memcached | apt install libmemcached-dev | pip3 install python-memcached
+* 0:49 nano /etc/memcached.conf | -m 256 | systectl restart memcached | systectl status memcached
+* 0:51 **LOW_CACHE memcached [3]** | settings.py | CACHE... | 1:13 django.core.cache...
+* 0:59 pip install django-extensions
+* 1:01 from django.conf import settings | from django.core.cache import cache | models add db_index
+* 1:06 views | get_link_category
+* 1:18 get_link_product | get_product
+* 1:38 ~~after relax~~ | **fragment templetes cache**
+* 1:49 order_from.html | field.name == 'product' {% cache 3600 orderitemform_product field.value %}
+* 2:00 views **@cache_page(3600) [4]**
+* 2:01 urls **cache_page(3600)(products)**
+* 2:03 **all_site** | settings middleware
+* 2:13 @never_cache
+* 2:17 hw
+* нужно убрать в модели Product, в методе str self.category
+* 
+
+##Задания 7
+1. Найти в проекте повторяющиеся вызовы методов для одного экземпляра модели и применить к ним декоратор **@cached_property**. Оценить, насколько уменьшилось число дублей при выполнении SQL-запросов и каков прирост производительности.
+2. Применить тег **with** в одном из шаблонов. Оценить, насколько уменьшилось число дублей при выполнении SQL-запросов и каков прирост производительности.
+3. Установить и настроить приложение **Memcached**. Реализовать кеширование на низком уровне для функций, возвращающих редко изменяющиеся данные (продукты каталога, список категорий и т.д.). Оценить прирост производительности.
+4. Реализовать кеширование в шаблоне для набора форм. Оценить эффект.
+5. ***Реализовать работу с некоторыми пунктами меню через AJAX и кешировать соответствующие страницы. Оценить эффект от применения технологии AJAX и эффект от кеширования.
+6. *Попробовать реализовать кеширование всего сайта в проекте. Оценить прирост производительности и возникающие при этом проблемы с обновлением контента.
+
+
 [comment]: <> (##Урок 6)
 [comment]: <> (* 0:14 pip install django-debug-toolbar | pip install django-debug-toolbar-template-profiler)
 [comment]: <> (* 0:17 settings 'debug_toolbar', 'template_profiler_panel' | if DEBUG: ...)
