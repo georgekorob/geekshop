@@ -7,7 +7,6 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 
 from adminapp.mixins import PageTitleMixin
 from basketapp.models import Basket
-from mainapp.context_processors import basket_context
 from mainapp.models import Product
 
 
@@ -43,7 +42,7 @@ class BasketUpdate(LoginRequiredMixin, PageTitleMixin, UpdateView):
             basket.save()
         else:
             basket.delete()
-        result = render_to_string('basketapp/basket.html', basket_context(self.request))
+        result = render_to_string('basketapp/basket.html', self.request.user.get_baskets)
         return JsonResponse({'result': result})
 
 
@@ -52,5 +51,5 @@ class BasketDelete(LoginRequiredMixin, PageTitleMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         self.get_object().delete()
-        result = render_to_string('basketapp/basket.html', basket_context(self.request))
+        result = render_to_string('basketapp/basket.html', self.request.user.get_baskets)
         return JsonResponse({'result': result})

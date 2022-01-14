@@ -17,6 +17,18 @@ class User(AbstractUser):
             return False
         return True
 
+    @property
+    def get_baskets(self):
+        from basketapp.models import Basket
+        baskets = Basket.objects.select_related().filter(user_id=self.id)
+        total_sum = sum(basket.prod for basket in baskets)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        return {
+            'baskets': baskets,
+            'total_sum': total_sum,
+            'total_quantity': total_quantity,
+        }
+
 
 class UserProfile(models.Model):
     MALE = 'M'

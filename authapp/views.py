@@ -13,9 +13,6 @@ from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, User
 
 # Create your views here.
 from authapp.models import User
-from basketapp.models import Basket
-from authapp.signals import create_user_profile
-from mainapp.context_processors import basket_context
 
 
 class UserLoginView(PageTitleMixin, LoginView):
@@ -80,7 +77,7 @@ class UserProfileView(LoginRequiredMixin, PageTitleMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
-        context.update(basket_context(self.request))
+        context.update(self.request.user.get_baskets)
         return context
 
     def post(self, request, *args, **kwargs):

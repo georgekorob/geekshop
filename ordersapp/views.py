@@ -10,8 +10,6 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 from adminapp.mixins import PageTitleMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from basketapp.models import Basket
-from mainapp.context_processors import basket_context
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
 from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
@@ -33,7 +31,7 @@ class OrderCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(basket_context(self.request))
+        context.update(self.request.user.get_baskets)
 
         order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
         if self.request.POST:
