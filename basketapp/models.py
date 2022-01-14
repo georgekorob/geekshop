@@ -6,18 +6,20 @@ from mainapp.models import Product
 
 
 # Метод с BasketQuerySet и переопределение save и delete предпочтительнее
-# class BasketQuerySet(models.QuerySet):
-#     def delete(self, *args, **kwargs):
-#         for item in self:
-#             item.product.quantity += item.quantity
-#             item.product.save()
-#         super().delete(*args, **kwargs)
+class BasketQuerySet(models.QuerySet):
+    def delete(self, *args, **kwargs):
+        products = []
+        for item in self:
+            item.product.quantity += item.quantity
+            products += [item.product]
+        Product.objects.bulk_update(products, ['quantity'])
+        super().delete(*args, **kwargs)
 
 
 class Basket(models.Model):
-    # objects = BasketQuerySet.as_manager()
+    objects = BasketQuerySet.as_manager()
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='basket')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     create_timestamp = models.DateTimeField(auto_now_add=True)
@@ -34,15 +36,15 @@ class Basket(models.Model):
     def get_item(pk):
         return Basket.objects.get(pk=pk).quantity
 
-    # def delete(self, *args, **kwargs):
-    #     self.product.quantity += self.quantity
-    #     self.save()
-    #     super().delete(*args, **kwargs)
-    #
-    # def save(self, *args, **kwargs):
-    #     if self.pk:
-    #         self.product.quantity -= self.quantity - self.get_item(int(self.pk))
-    #     else:
-    #         self.product.quantity -= self.quantity
-    #     self.product.save()
-    #     super().save(*args, **kwargs)
+    def delete(self, *args, **kwargs):
+        self.product.quantity += self.quantity
+        self.save()
+        super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.product.quantity -= self.quantity - self.get_item(int(self.pk))
+        else:
+            self.product.quantity -= self.quantity
+        self.product.save()
+        super().save(*args, **kwargs)

@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import socket
 
-IS_SERVER = (socket.gethostname() != 'George-PC' and socket.gethostname() != 'korobanov-g574')
+IS_SERVER = socket.gethostname() == 'Raspi'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,7 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
-                'mainapp.context_processors.basket_context',
+                # 'mainapp.context_processors.basket_context',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
             ],
@@ -203,6 +203,16 @@ if IS_SERVER:
             'USER': 'postgres',
         }
     }
+    CACHE_MIDDLEWARE_ALIAS = 'default'
+    CACHE_MIDDLEWARE_SECONDS = 120
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'geekbrains'
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '192.168.0.101:11211'
+        }
+    }
+    LOW_CACHE = True
 
 if DEBUG:
     INSTALLED_APPS.extend([

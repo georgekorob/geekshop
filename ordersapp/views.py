@@ -10,11 +10,9 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 
 from adminapp.mixins import PageTitleMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from basketapp.models import Basket
-from mainapp.context_processors import basket_context
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
-from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
+# from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
 
 
 class OrderList(LoginRequiredMixin, PageTitleMixin, ListView):
@@ -33,13 +31,14 @@ class OrderCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(basket_context(self.request))
+        # context.update(self.request.user.get_baskets)
 
         order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
         if self.request.POST:
             formset = order_form_set(self.request.POST)
         else:
-            basket_item = context.get('baskets')
+            # basket_item = context.get('baskets')
+            basket_item = self.request.user.get_baskets.get('baskets')
             if basket_item:
                 order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=basket_item.count())
                 formset = order_form_set()
@@ -64,7 +63,7 @@ class OrderCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
                 orderitems.instance = self.object
                 orderitems.save()
 
-            if self.object.get_total_cost == 0:
+            if self.object.get_summary().get('get_total_cost') == 0:
                 self.object.delete()
         return super().form_valid(form)
 
@@ -100,7 +99,7 @@ class OrderUpdate(LoginRequiredMixin, PageTitleMixin, UpdateView):
                 orderitems.instance = self.object
                 orderitems.save()
 
-            if self.object.get_total_cost == 0:
+            if self.object.get_summary().get('get_total_cost') == 0:
                 self.object.delete()
         return super().form_valid(form)
 

@@ -25,7 +25,7 @@ class Product(models.Model):
     is_active = models.BooleanField(db_index=True, default=True)
 
     def __str__(self):
-        return f'{self.name} | {self.category}'
+        return f'{self.name}'
 
     class Meta:
         verbose_name = 'товар'

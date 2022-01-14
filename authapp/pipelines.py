@@ -51,7 +51,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         # with open(MEDIA_ROOT / path_photo, 'wb') as photo:
         #     photo.write(photo_response.content)
         # user.image = path_photo
-        user.image.save(f'users_image/{uid_vk}_{username_vk}.jpg', ContentFile(urlopen(photo_link).read()))
+        user.image.save(f'{uid_vk}_{username_vk}.jpg', ContentFile(urlopen(photo_link).read()))
 
     if data['personal']['langs']:
         user.userprofile.langs = data['personal']['langs'][0] if len(data['personal']['langs'][0]) > 0 else 'EN'
