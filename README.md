@@ -10,7 +10,7 @@
 * 0:39 get_summary
 * 0:43 **with [2]** templates | 1:46 correct =
 * 0:47 apt install memcached | apt install libmemcached-dev | pip3 install python-memcached
-* 0:49 nano /etc/memcached.conf | -m 256 | systectl restart memcached | systectl status memcached
+* 0:49 nano /etc/memcached.conf | -m 256 | systemctl restart memcached | systemctl status memcached
 * 0:51 **LOW_CACHE memcached [3]** | settings.py | CACHE... | 1:13 django.core.cache...
 * 0:59 pip install django-extensions
 * 1:01 from django.conf import settings | from django.core.cache import cache | models add db_index
