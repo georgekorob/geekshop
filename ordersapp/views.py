@@ -12,7 +12,7 @@ from adminapp.mixins import PageTitleMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
-from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
+# from ordersapp.signals import product_quantity_update_delete, product_quantity_update_save
 
 
 class OrderList(LoginRequiredMixin, PageTitleMixin, ListView):
@@ -63,7 +63,7 @@ class OrderCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
                 orderitems.instance = self.object
                 orderitems.save()
 
-            if self.object.get_total_cost == 0:
+            if self.object.get_summary().get('get_total_cost') == 0:
                 self.object.delete()
         return super().form_valid(form)
 
@@ -99,7 +99,7 @@ class OrderUpdate(LoginRequiredMixin, PageTitleMixin, UpdateView):
                 orderitems.instance = self.object
                 orderitems.save()
 
-            if self.object.get_total_cost == 0:
+            if self.object.get_summary().get('get_total_cost') == 0:
                 self.object.delete()
         return super().form_valid(form)
 

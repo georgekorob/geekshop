@@ -43,7 +43,7 @@ class BasketUpdate(LoginRequiredMixin, PageTitleMixin, UpdateView):
         else:
             basket.delete()
         # result = render_to_string('basketapp/basket.html', self.request.user.get_baskets)
-        result = render_to_string('basketapp/basket.html', self.request.user)
+        result = render_to_string('basketapp/basket.html', {'user': self.request.user})
         return JsonResponse({'result': result})
 
 
@@ -53,5 +53,5 @@ class BasketDelete(LoginRequiredMixin, PageTitleMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         self.get_object().delete()
         # result = render_to_string('basketapp/basket.html', self.request.user.get_baskets)
-        result = render_to_string('basketapp/basket.html', self.request.user)
+        result = render_to_string('basketapp/basket.html', {'user': self.request.user})
         return JsonResponse({'result': result})
