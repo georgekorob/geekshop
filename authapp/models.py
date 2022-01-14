@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.timezone import now
 from datetime import timedelta
 
@@ -17,10 +18,10 @@ class User(AbstractUser):
             return False
         return True
 
-    @property
+    @cached_property
     def get_baskets(self):
-        from basketapp.models import Basket
-        baskets = Basket.objects.select_related().filter(user_id=self.id)
+        # Изначально делал context_processor, который сразу доставал корзину и считал total, поэтому оптимизации не получилось
+        baskets = self.basket.select_related()
         total_sum = sum(basket.prod for basket in baskets)
         total_quantity = sum(basket.quantity for basket in baskets)
         return {

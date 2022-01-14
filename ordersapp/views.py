@@ -31,13 +31,14 @@ class OrderCreate(LoginRequiredMixin, PageTitleMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(self.request.user.get_baskets)
+        # context.update(self.request.user.get_baskets)
 
         order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
         if self.request.POST:
             formset = order_form_set(self.request.POST)
         else:
-            basket_item = context.get('baskets')
+            # basket_item = context.get('baskets')
+            basket_item = self.request.user.get_baskets.get('baskets')
             if basket_item:
                 order_form_set = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=basket_item.count())
                 formset = order_form_set()

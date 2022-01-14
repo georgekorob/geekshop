@@ -16,10 +16,20 @@
    <hr>
    <div class="h4">заказчик: {{ user.last_name }} {{ user.first_name }} </div>
    <div class="h4">
-       общее количество товаров: <span class="order_total_quantity">{% if total_quantity %}{{ total_quantity }}{% else %}0{% endif %}</span>
+       общее количество товаров: <span class="order_total_quantity">
+       {% if user.get_baskets.total_quantity %}
+           {{ user.get_baskets.total_quantity }}
+       {% else %}
+           0
+       {% endif %}</span>
    </div>
    <div class="h3">
-       общая стоимость: <span class="order_total_cost">{% if total_sum %}{{ total_sum }}{% else %}0{% endif %}</span> руб
+       общая стоимость: <span class="order_total_cost">
+       {% if user.get_baskets.total_sum %}
+           {{ user.get_baskets.total_sum }}
+       {% else %}
+           0
+       {% endif %}</span> руб
    </div>
 {% endif %}
 <hr>
