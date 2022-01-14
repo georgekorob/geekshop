@@ -3,6 +3,9 @@ from django.db import models
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from datetime import timedelta
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Create your models here.
 
@@ -49,3 +52,11 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = 'пользователь vk'
         verbose_name_plural = 'пользователи vk'
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user_id=instance.id)
+    else:
+        instance.userprofile.save()
