@@ -18,6 +18,7 @@ from authapp.models import User
 class UserLoginView(PageTitleMixin, LoginView):
     form_class = UserLoginForm
     title = 'авторизация'
+    success_url = reverse_lazy('index')
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):
