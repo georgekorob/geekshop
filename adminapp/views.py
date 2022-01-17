@@ -73,14 +73,14 @@ class CategoryUpdateView(SuperUserOnlyMixin, PageTitleMixin, UpdateView):
 
 class CategoryDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
     model = ProductCategory
-    form_class = CategoryCreateForm
     template_name = 'mainapp/productcategory_update_delete.html'
-    title = 'админ: удалить категорию'
     success_url = reverse_lazy('adminapp:read_categories')
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        self.object.is_active = not self.object.is_active
+        activate = not self.object.is_active
+        self.object.product_set.update(is_active=activate)
+        self.object.is_active = activate
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
