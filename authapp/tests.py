@@ -8,7 +8,7 @@ from django.urls import reverse
 from authapp.models import User
 
 
-class UserManagementTestCase(TestCase):
+class TestSmokeUserManagement(TestCase):
     username = 'django'
     email = 'djano@mail.ru'
     password = 'geekshop'

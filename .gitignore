@@ -4,4 +4,4 @@ db.sqlite3
 /media/users_image/**
 /.env
 /history.txt
-/authapp/fixtures/users.json
+/authapp/fixtures/authapp.json
