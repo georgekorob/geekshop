@@ -9,8 +9,8 @@
 [comment]: <> (* 0:19 update is_active)
 [comment]: <> (* 0:21 baskets quantity)
 [comment]: <> (* 0:28 category discount)
-* 0:36 Q
-* 0:50 action table discount sort
+[comment]: <> (* 0:36 Q)
+* 0:47 action table discount sort
 * 1:17 relax 1:27
 * 1:28 smoke tests
 * 1:43 disable debug panel
