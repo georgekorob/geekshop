@@ -6,28 +6,36 @@
                 <h1 class="mt-4">Редактирование категории | {{ object.name }}</h1>
                 <div class="card-body">
                     <form action="{% url 'adminapp:update_category' object.id %}" method="post"
-                        {% csrf_token %}
-                        <div class="form-row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="small mb-1" for="{{ form.name.id_for_label }}">Наименование</label>
-                                    {{ form.name }}
-                                </div>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.name.id_for_label }}">Наименование</label>
+                                {{ form.name }}
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="small mb-1" for="{{ form.description.id_for_label }}">Описание</label>
-                                    {{ form.description }}
-                                </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.description.id_for_label }}">Описание</label>
+                                {{ form.description }}
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-lg-6" style="margin-top: 33px;">
-                                <input class="btn btn-info btn-block" type="submit" value="Сохранить">
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.discount.id_for_label }}">Скидка</label>
+                                {{ form.discount }}
                             </div>
                         </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-lg-6" style="margin-top: 33px;">
+                            <input class="btn btn-info btn-block" type="submit" value="Сохранить">
+                        </div>
+                    </div>
                     </form>
                 </div>
             </div>
