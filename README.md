@@ -8,7 +8,7 @@
 * 0:13 F&Q objects
 * 0:19 update is_active
 * 0:21 baskets quantity
-* 0:29 category discount
+* 0:28 category discount
 * 0:36 Q
 * 0:50 action table discount sort
 * 1:17 relax 1:27

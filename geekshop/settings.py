@@ -212,7 +212,8 @@ if IS_SERVER:
             'LOCATION': '192.168.0.101:11211'
         }
     }
-    LOW_CACHE = True
+
+LOW_CACHE = IS_SERVER
 
 if DEBUG:
     INSTALLED_APPS.extend([
