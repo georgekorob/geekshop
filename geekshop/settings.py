@@ -53,17 +53,13 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-]
-if DEBUG:
-    MIDDLEWARE.append('geekshop.mid.DisableCSRFMiddleware')
-else:
-    MIDDLEWARE.append('django.middleware.csrf.CsrfViewMiddleware')
-MIDDLEWARE.extend([
+    # 'geekshop.mid.DisableCSRFMiddleware' if DEBUG else 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-])
+]
 
 ROOT_URLCONF = 'geekshop.urls'
 
@@ -159,16 +155,18 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/'
 
-DOMAIN_NAME = 'http://localhost:8000'
-# EMAIL_HOST = 'localhost'
-# EMAIL_PORT = 25
-# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True'
-#
+DOMAIN_NAME = 'http://127.0.0.1:8000'
+EMAIL_HOST = 'mail.ru'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = 'tmp/emails/'
-
 # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
 # python -m smtpd -n -c DebuggingServer localhost:25
 
@@ -203,6 +201,8 @@ if IS_SERVER:
             'USER': 'postgres',
         }
     }
+    SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY_RASPI')
+    SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET_RASPI')
     CACHE_MIDDLEWARE_ALIAS = 'default'
     CACHE_MIDDLEWARE_SECONDS = 120
     CACHE_MIDDLEWARE_KEY_PREFIX = 'geekbrains'
