@@ -1,4 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.db import connection
+from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -6,9 +8,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
-from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryCreateForm, ProductCreateForm, ProductUpdateForm
+from adminapp.forms import UserAdminRegisterForm, UserAdminProfileForm, CategoryCreateForm, ProductCreateForm, \
+    ProductUpdateForm, CategoryUpdateForm
 from adminapp.mixins import SuperUserOnlyMixin, PageTitleMixin
 from authapp.models import User
+from basketapp.views import db_profile_by_type
 from mainapp.models import ProductCategory, Product
 
 
@@ -65,22 +69,33 @@ class CategoryListView(SuperUserOnlyMixin, PageTitleMixin, ListView):
 
 class CategoryUpdateView(SuperUserOnlyMixin, PageTitleMixin, UpdateView):
     model = ProductCategory
-    form_class = CategoryCreateForm
+    form_class = CategoryUpdateForm
     template_name = 'mainapp/productcategory_update_delete.html'
     title = 'админ: редактирование категории'
     success_url = reverse_lazy('adminapp:read_categories')
 
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.product_set.update(price=F('price') * (1 - discount / 100))
+                # db_profile_by_type(self.model, 'UPDATE', connection.queries)
+                # Пример вывода:
+                # db_profile UPDATE for <class 'mainapp.models.ProductCategory'>:
+                # UPDATE "mainapp_product" SET "price" = ("mainapp_product"."price" * 0.9) WHERE "mainapp_product"."category_id" = 4
+        return super().form_valid(form)
+
 
 class CategoryDeleteView(SuperUserOnlyMixin, PageTitleMixin, DeleteView):
     model = ProductCategory
-    form_class = CategoryCreateForm
     template_name = 'mainapp/productcategory_update_delete.html'
-    title = 'админ: удалить категорию'
     success_url = reverse_lazy('adminapp:read_categories')
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        self.object.is_active = not self.object.is_active
+        activate = not self.object.is_active
+        self.object.product_set.update(is_active=activate)
+        self.object.is_active = activate
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 

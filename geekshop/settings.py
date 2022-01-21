@@ -53,17 +53,13 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-]
-if DEBUG:
-    MIDDLEWARE.append('geekshop.mid.DisableCSRFMiddleware')
-else:
-    MIDDLEWARE.append('django.middleware.csrf.CsrfViewMiddleware')
-MIDDLEWARE.extend([
+    # 'geekshop.mid.DisableCSRFMiddleware' if DEBUG else 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-])
+]
 
 ROOT_URLCONF = 'geekshop.urls'
 
@@ -159,16 +155,18 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/'
 
-# DOMAIN_NAME = 'http://localhost:8000'
-# EMAIL_HOST = 'localhost'
-# EMAIL_PORT = 25
-# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True'
-#
+DOMAIN_NAME = 'http://127.0.0.1:8000'
+EMAIL_HOST = 'mail.ru'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = 'tmp/emails/'
-
 # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
 # python -m smtpd -n -c DebuggingServer localhost:25
 
@@ -203,6 +201,8 @@ if IS_SERVER:
             'USER': 'postgres',
         }
     }
+    SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY_RASPI')
+    SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET_RASPI')
     CACHE_MIDDLEWARE_ALIAS = 'default'
     CACHE_MIDDLEWARE_SECONDS = 120
     CACHE_MIDDLEWARE_KEY_PREFIX = 'geekbrains'
@@ -212,34 +212,38 @@ if IS_SERVER:
             'LOCATION': '192.168.0.101:11211'
         }
     }
-    LOW_CACHE = True
 
-if DEBUG:
-    INSTALLED_APPS.extend([
-        'debug_toolbar',
-        'template_profiler_panel',
-        'django_extensions',
-    ])
+LOW_CACHE = IS_SERVER
 
-    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# if DEBUG:
+#     INSTALLED_APPS.append('django_extensions')
 
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': lambda x: True,
-    }
-
-    DEBUG_TOOLBAR_PANELS = [
-        'debug_toolbar.panels.versions.VersionsPanel',
-        'debug_toolbar.panels.timer.TimerPanel',
-        'debug_toolbar.panels.settings.SettingsPanel',
-        'debug_toolbar.panels.headers.HeadersPanel',
-        'debug_toolbar.panels.request.RequestPanel',
-        'debug_toolbar.panels.sql.SQLPanel',
-        'debug_toolbar.panels.templates.TemplatesPanel',
-        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-        'debug_toolbar.panels.cache.CachePanel',
-        'debug_toolbar.panels.signals.SignalsPanel',
-        'debug_toolbar.panels.logging.LoggingPanel',
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-        'debug_toolbar.panels.profiling.ProfilingPanel',
-        'template_profiler_panel.panels.template.TemplateProfilerPanel',
-    ]
+# if DEBUG:
+#     INSTALLED_APPS.extend([
+#         'debug_toolbar',
+#         'template_profiler_panel',
+#         'django_extensions',
+#     ])
+#
+#     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+#
+#     DEBUG_TOOLBAR_CONFIG = {
+#         'SHOW_TOOLBAR_CALLBACK': lambda x: True,
+#     }
+#
+#     DEBUG_TOOLBAR_PANELS = [
+#         'debug_toolbar.panels.versions.VersionsPanel',
+#         'debug_toolbar.panels.timer.TimerPanel',
+#         'debug_toolbar.panels.settings.SettingsPanel',
+#         'debug_toolbar.panels.headers.HeadersPanel',
+#         'debug_toolbar.panels.request.RequestPanel',
+#         'debug_toolbar.panels.sql.SQLPanel',
+#         'debug_toolbar.panels.templates.TemplatesPanel',
+#         'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+#         'debug_toolbar.panels.cache.CachePanel',
+#         'debug_toolbar.panels.signals.SignalsPanel',
+#         'debug_toolbar.panels.logging.LoggingPanel',
+#         'debug_toolbar.panels.redirects.RedirectsPanel',
+#         'debug_toolbar.panels.profiling.ProfilingPanel',
+#         'template_profiler_panel.panels.template.TemplateProfilerPanel',
+#     ]

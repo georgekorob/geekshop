@@ -3,5 +3,5 @@ pycache/
 db.sqlite3
 /media/users_image/**
 /.env
-/users.json
 /history.txt
+/authapp/fixtures/authapp.json
